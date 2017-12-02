@@ -43,23 +43,25 @@ audio_ids = get_ids(audio_names)
 
 result = {}
 
-clean_audio(audio_names, audio_ids)				
+#clean_audio(audio_names, audio_ids)				
 
 for audio_index, audio_id in enumerate(audio_ids):
+	#print("Audio ID: ", audio_id, " Audio Name: ", audio_names[audio_index])
 	try:
 		pos = kelly_ids.index(audio_id)
 		result[audio_names[audio_index]] = kelly_names[pos]
+		#print("Audio ID: ", audio_id, " Transcript ID: ", kelly_ids[pos])
 	except:
-#		try:
-#			pos = backup_ids.index(audio_id)
-#			result[audio_names[audio_index]] = backup_names[pos]
-#
-#		except:	
-		print("No transcript for " + audio_id)
+		try:
+			pos = backup_ids.index(audio_id)
+			result[audio_names[audio_index]] = backup_names[pos]
+		except:
+			pass
+			#print("No transcript for " + audio_id)
 			
-for key, value in result.items():
-	print(key, ": ", value)
-
+#for key, value in result.items():
+#	print(key, ": ", value)
+print(len(result), "transcripts were matched.")
 
 
 
