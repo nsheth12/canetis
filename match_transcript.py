@@ -46,7 +46,7 @@ result = {}
 #clean_audio(audio_names, audio_ids)				
 
 for audio_index, audio_id in enumerate(audio_ids):
-	#print("Audio ID: ", audio_id, " Audio Name: ", audio_names[audio_index])
+	print("Audio ID: ", audio_id, " Audio Name: ", audio_names[audio_index])
 	try:
 		pos = kelly_ids.index(audio_id)
 		result[audio_names[audio_index]] = kelly_names[pos]
@@ -59,9 +59,9 @@ for audio_index, audio_id in enumerate(audio_ids):
 			pass
 			#print("No transcript for " + audio_id)
 			
-#for key, value in result.items():
-#	print(key, ": ", value)
-print(len(result), "transcripts were matched.")
+for key, value in result.items():
+	print(key, ": ", value)
+#print(len(result), "transcripts were matched.")
 
 
 
