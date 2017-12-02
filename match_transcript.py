@@ -57,7 +57,7 @@ def load_data(dir_path, audio=False):
 	
 
 kelly_path = "../kelly_qtype_csvs/"
-backup_path = "../forensic_interview_transcripts/"
+backup_path = "../csv_forensic_interview_transcipts/"
 audio_path = "../mono8khz/"
 
 """
