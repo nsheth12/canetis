@@ -1,29 +1,63 @@
 import os, re
 
-# get the "id" number at the beginning of the filename
+
+#get id from a given filename
+def get_id(name):
+	return re.split("_|-", name)[0]
+
+#generate id list that corresponds to audio_names
 def get_ids(names):
-	return [re.split("_|-", f)[0] for f in names]
+	ids = []	
+	for name in names:
+		ids.append(get_id(name))
+	
+	return ids		
 
-# remove all audio files that have multiple audio files for the same
-# transcript
-def clean_audio(audio_names, audio_ids):
-	audio_names.sort()
-	audio_ids.sort()
 
+def remove_duplicates(audio_names, audio_ids):
 	i = 0
 	while i < len(audio_ids) - 1:
 		length = len(audio_ids)
-		while audio_ids[i] == audio_ids[i+1]:
-			del audio_names[i+1]
-			del audio_ids[i+1]
-		if length != len(audio_ids):
-			del audio_ids[i]
-			del audio_names[i]
-		else:
-			i += 1
+		
+		try:
+			#delete all duplicates
+			while audio_ids[i] == audio_ids[i+1]:
+				del audio_names[i+1]
+				del audio_ids[i+1]
+
+			#if anything was deleted, delete current position
+			if length != len(audio_ids):
+				del audio_ids[i]
+				del audio_names[i]
+			else:
+				i += 1
+		except:
+			pass
+
+	
+# Cleans the audio files of duplicates and
+# returns corresponding audio_ids list
+
+def load_data(dir_path, audio=False):
+	
+	names = os.listdir(dir_path)
+
+	names.sort()
+
+	ids = get_ids(names)
+
+	
+	if audio:
+		remove_duplicates(names, ids)
+	
+
+
+	return names, ids
+	
+	
 
 kelly_path = "../kelly_qtype_csvs/"
-backup_path = "../forensic_interview_transcripts/"
+backup_path = "../csv_forensic_interview_transcipts/"
 audio_path = "../mono8khz/"
 
 """
@@ -32,21 +66,19 @@ did not have any files that were not already in the forensic_interview_transcrip
 directory, so we removed them from the search path
 """
 
-kelly_names = os.listdir(kelly_path)
-kelly_ids = get_ids(kelly_names)
+kelly_names, kelly_ids = load_data(kelly_path)
 
-backup_names = os.listdir(backup_path)
-backup_ids = get_ids(backup_names)
+backup_names, backup_ids = load_data(backup_path)
 
-audio_names = os.listdir(audio_path)
-audio_ids = get_ids(audio_names)
+
+audio_names, audio_ids = load_data(audio_path, audio=True)
+
 
 result = {}
 
-#clean_audio(audio_names, audio_ids)				
 
 for audio_index, audio_id in enumerate(audio_ids):
-	print("Audio ID: ", audio_id, " Audio Name: ", audio_names[audio_index])
+	#print("Audio ID: ", audio_id, " Audio Name: ", audio_names[audio_index])
 	try:
 		pos = kelly_ids.index(audio_id)
 		result[audio_names[audio_index]] = kelly_names[pos]
@@ -58,13 +90,13 @@ for audio_index, audio_id in enumerate(audio_ids):
 		except:
 			pass
 			#print("No transcript for " + audio_id)
-			
+	
+
+"""
 for key, value in result.items():
 	print(key, ": ", value)
-#print(len(result), "transcripts were matched.")
-
-
-
+"""
+print(str(len(result)) + " transcripts were matched.")
 
 
 
