@@ -40,21 +40,19 @@ def remove_duplicates(audio_names, audio_ids):
 
 def load_data(dir_path, audio=False):
 	
-	audio_names = os.listdir(dir_path)
+	names = os.listdir(dir_path)
 
-	audio_names.sort()
+	names.sort()
 
-	audio_ids = get_ids(audio_names)
-	
-	print(len(audio_names))
+	ids = get_ids(names)
+
 	
 	if audio:
-		remove_duplicates(audio_names, audio_ids)
+		remove_duplicates(names, ids)
 	
-	print(len(audio_names))
-	print(len(audio_ids))	
 
-	return audio_names, audio_ids
+
+	return names, ids
 	
 	
 
@@ -71,7 +69,7 @@ directory, so we removed them from the search path
 kelly_names, kelly_ids = load_data(kelly_path)
 
 backup_names, backup_ids = load_data(backup_path)
-print(len(backup_names))
+
 
 audio_names, audio_ids = load_data(audio_path, audio=True)
 
@@ -94,10 +92,11 @@ for audio_index, audio_id in enumerate(audio_ids):
 			#print("No transcript for " + audio_id)
 	
 
-	
+"""
 for key, value in result.items():
 	print(key, ": ", value)
-print(len(result), "transcripts were matched.")
+"""
+print(str(len(result)) + " transcripts were matched.")
 
 
 
