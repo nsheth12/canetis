@@ -5,12 +5,15 @@ def align(audio_file, text_file, error_rate=.05):
 	# run gentle and get output dictionary
 	# run recursion and set output equal to result array
 	# return result array 
+	pass
 
 
 def recurse(gentle_output, audio_file_maybe_path, error_rate):
 	# if % unaligned in gentle_output < 5%, return gentle output
 	# call segmentize on gentle_output, getting list of segments
 	segs = segmentize(gentle_output)
+
+	res = []
 
 	if len(segs) == 1:
 		res.append(segs)
