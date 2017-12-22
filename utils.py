@@ -1,5 +1,6 @@
 import sys
-sys.path.append() # put here path to gentle module
+sys.path.append() # put here path to gentle main directory
+import gentle
 
 from segment import Segment
 from pydub import AudioSegment
