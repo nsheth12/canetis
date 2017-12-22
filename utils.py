@@ -1,5 +1,6 @@
 from segment import Segment
 
+
 def gentle (s):
 	"""
 	takes in a segment
@@ -8,6 +9,9 @@ def gentle (s):
 	3. run Gentle with these two
 	4. delete text file/audio files
 	"""
+
+	
+
 
 def segmentize (gentle_outputs, anchor_length=3, rel_audio_start=0):
 	"""
@@ -44,11 +48,11 @@ def segmentize (gentle_outputs, anchor_length=3, rel_audio_start=0):
 				
 				
 				#store the previous unanchored segments as a seg- append
-				seg = get_segment(gentle_outputs[end_prev_anchor:first_correct], rel_audio_start, False)	
+				seg = get_segment(gentle_outputs[end_prev_anchor:first_correct_index], rel_audio_start, False)	
 				segs.append(seg)	
 				
 				#store the anchor segment
-				seg = get_segment(gentle_outputs[first_correct:index], rel_audio_start, True)
+				seg = get_segment(gentle_outputs[first_correct_index:index], rel_audio_start, True)
 				segs.append(seg)	
 				
 				#update end of prev anchor tracker
