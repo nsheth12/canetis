@@ -1,6 +1,4 @@
 
-
-
 class Segment(object):
 	"""
 	Class to store start/end values 
@@ -22,8 +20,7 @@ class Segment(object):
 		text = []
 		for info in self.gentle:
 			text.append(info["word"])
-		return text
-			
+		return text		
 
 #quick test
 
