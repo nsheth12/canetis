@@ -1,8 +1,4 @@
-from segment import Segment
-from utils import *
-
-
-
+from utils import gentle, segmentize
 
 def align(audio_file, text_file, error_rate=.05):
 	# get audio and text files
@@ -14,8 +10,20 @@ def align(audio_file, text_file, error_rate=.05):
 def recurse(gentle_output, audio_file_maybe_path, error_rate):
 	# if % unaligned in gentle_output < 5%, return gentle output
 	# call segmentize on gentle_output, getting list of segments
+	segs = segmentize(gentle_output)
+
+	if len(segs) == 1:
+		res.append(segs)
+		return res
+
 	res = []
 	# loop through each segment
-	#	if aligned --> add to res as is
-	#	else add recurse(Gentle(segment))
+	for seg in segs:
+		if seg.aligned:
+			# if aligned --> add to res as is
+			res.append(seg)
+		else:
+			# else add recurse(Gentle(segment))
+			res.append(recurse(gentle(seg)))
+
 	return res
