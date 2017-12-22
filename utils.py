@@ -23,7 +23,7 @@ def gentle (seg, audio_file):
 	# run Gentle
 	resources = gentle.Resources()
 	with gentle.resampled("temp_audio.wav") as wavfile:
-    	aligner = gentle.ForcedAligner(resources, transcript)
+		aligner = gentle.ForcedAligner(resources, transcript)
 		result = aligner.transcribe(wavfile)
 
 	# delete cut audio file
@@ -110,7 +110,7 @@ def segmentize (gentle_outputs, anchor_length=3, rel_audio_start=0):
 				#store the previous unanchored segments as a seg- append
 				seg = get_segment(gentle_outputs[end_prev_anchor:],\
 				rel_audio_start, False)	
-				
+
 				segs.append(seg)
 
 	return segs
@@ -138,9 +138,32 @@ test_output = [ {"case":"success", "word":"a", "audio_start":10}, \
 		
 x = segmentize(test_output)
 
-print(x[0].get_text())
-print(x[1].get_text())
-print(x[2].get_text())
+for i in x:
+	print(i.get_text())
 
 
 
+def update_segs(gentle_outputs, ):
+	if correct_count >= anchor_length:
+
+			#store the previous unanchored segments as a seg- append
+			seg = get_segment(gentle_outputs[end_prev_anchor:\
+			first_correct_index], rel_audio_start, False)	
+
+			segs.append(seg)	
+			
+			#store the anchor segment
+			seg = get_segment(gentle_outputs[first_correct_index:], \
+			rel_audio_start, True)
+			segs.append(seg)	
+			
+			# update end of prev anchor tracker
+			end_prev_anchor = index
+			
+		else: 
+
+			#store the previous unanchored segments as a seg- append
+			seg = get_segment(gentle_outputs[end_prev_anchor:],\
+			rel_audio_start, False)	
+			
+			segs.append(seg)
