@@ -7,7 +7,7 @@ from segment import Segment
 from pydub import AudioSegment
 import os
 
-def gentle (seg, audio_file):
+def gentle (seg):
 	"""
 	takes in a segment
 	1. create new text file containing text
@@ -18,7 +18,7 @@ def gentle (seg, audio_file):
 	transcript = " ".join(seg.get_text())
 
 	# I think they are wav files, but not sure
-	audio_full = AudioSegment.from_file(audio_file, format="wav")
+	audio_full = AudioSegment.from_file(seg.audio_file, format="wav")
 	audio_cut = audio_full[seg.start_audio:seg.end_audio]
 	audio_cut.export("temp_audio.wav", format="wav")
 
@@ -34,7 +34,8 @@ def gentle (seg, audio_file):
 	return result
 
 
-def segmentize (gentle_outputs, anchor_length=3, rel_audio_start=0):
+def segmentize (gentle_outputs, audio_file, 
+				anchor_length=3, rel_audio_start=0):
 	"""
 	takes in Gentle output (array of dicts)
 	break into segments which marked as aligned or unaligned
@@ -62,13 +63,13 @@ def segmentize (gentle_outputs, anchor_length=3, rel_audio_start=0):
 		elif correct_count >= anchor_length:
 			# store the previous unanchored segments as a seg and append
 			seg = get_segment(gentle_outputs[end_prev_anchor:\
-				first_correct_index], rel_audio_start, False)	
+				first_correct_index], rel_audio_start, False, audio_file)	
 
 			segs.append(seg)	
 			
 			# store the anchor segment
 			seg = get_segment(gentle_outputs[first_correct_index:\
-				index], rel_audio_start, True)
+				index], rel_audio_start, True, audio_file)
 			segs.append(seg)	
 			
 			# update end of prev anchor tracker
@@ -82,14 +83,14 @@ def segmentize (gentle_outputs, anchor_length=3, rel_audio_start=0):
 		if index == len(gentle_outputs) - 1:
 			if correct_count >= anchor_length:
 				# store the previous unanchored segments as a seg and append
-				seg = get_segment(gentle_outputs[end_prev_anchor:\
-				first_correct_index], rel_audio_start, False)	
+				seg = get_segment(gentle_outputs[end_prev_anchor: \
+					first_correct_index], rel_audio_start, False, audio_file)	
 
 				segs.append(seg)	
 				
 				# store the anchor segment
 				seg = get_segment(gentle_outputs[first_correct_index:], \
-				rel_audio_start, True)
+					rel_audio_start, True, audio_file)
 				segs.append(seg)	
 				
 				# update end of prev anchor tracker
@@ -97,18 +98,19 @@ def segmentize (gentle_outputs, anchor_length=3, rel_audio_start=0):
 			else:
 				# store the previous unanchored segments as a seg- append
 				seg = get_segment(gentle_outputs[end_prev_anchor:],\
-				rel_audio_start, False)	
+					rel_audio_start, False, audio_file)	
 
 				segs.append(seg)
 
 	return segs
 
-def get_segment(gentle_output, rel_audio_start, aligned):
+def get_segment(gentle_output, rel_audio_start, aligned, audio_file):
 	# relative audio start time plus the audio time of the first/last word
 	audio_start = rel_audio_start + gentle_output[0]["audio_start"]
 	audio_finish = rel_audio_start + gentle_output[-1]["audio_end"]
 
-	seg = Segment(audio_start, audio_finish, gentle_output, aligned)
+	seg = Segment(audio_start, audio_finish,
+				  gentle_output, aligned, audio_file)
 	
 	return seg
 
@@ -122,33 +124,7 @@ test_output = [ {"case":"success", "word":"a", "audio_start":10}, \
 {"case": "success", "word":"d"}, \
 {"case":"success", "audio_end":20, "word":"d"}]
 		
-x = segmentize(test_output)
+x = segmentize(test_output, "some_file")
 
 for i in x:
 	print(i.get_text())
-
-
-def update_segs(gentle_outputs, ):
-	if correct_count >= anchor_length:
-
-			#store the previous unanchored segments as a seg- append
-			seg = get_segment(gentle_outputs[end_prev_anchor:\
-			first_correct_index], rel_audio_start, False)	
-
-			segs.append(seg)	
-			
-			#store the anchor segment
-			seg = get_segment(gentle_outputs[first_correct_index:], \
-			rel_audio_start, True)
-			segs.append(seg)	
-			
-			# update end of prev anchor tracker
-			end_prev_anchor = index
-			
-		else: 
-
-			#store the previous unanchored segments as a seg- append
-			seg = get_segment(gentle_outputs[end_prev_anchor:],\
-			rel_audio_start, False)	
-			
-			segs.append(seg)
