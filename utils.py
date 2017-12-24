@@ -1,13 +1,15 @@
 import sys
 sys.path.append("/Users/nihar/Nihar/SAIL/gentle")
 sys.path.append("/Users/nihar/Nihar/SAIL/gentle/gentle")
+sys.path.append("/home/kian/ML/SAIL/sail-forensic-gentle/gentle")
+sys.path.append("/home/kian/ML/SAIL/sail-forensic-gentle/gentle/gentle")
 import gentle
 
 from segment import Segment
 from pydub import AudioSegment
 import os
 
-def gentle (seg, audio_file):
+def gentle(seg, audio_file):
 	"""
 	takes in a segment
 	1. create new text file containing text
@@ -104,6 +106,7 @@ def segmentize (gentle_outputs, anchor_length=3, rel_audio_start=0):
 	return segs
 
 def get_segment(gentle_output, rel_audio_start, aligned):
+
 	# relative audio start time plus the audio time of the first/last word
 	audio_start = rel_audio_start + gentle_output[0]["audio_start"]
 	audio_finish = rel_audio_start + gentle_output[-1]["audio_end"]
@@ -128,27 +131,3 @@ for i in x:
 	print(i.get_text())
 
 
-def update_segs(gentle_outputs, ):
-	if correct_count >= anchor_length:
-
-			#store the previous unanchored segments as a seg- append
-			seg = get_segment(gentle_outputs[end_prev_anchor:\
-			first_correct_index], rel_audio_start, False)	
-
-			segs.append(seg)	
-			
-			#store the anchor segment
-			seg = get_segment(gentle_outputs[first_correct_index:], \
-			rel_audio_start, True)
-			segs.append(seg)	
-			
-			# update end of prev anchor tracker
-			end_prev_anchor = index
-			
-		else: 
-
-			#store the previous unanchored segments as a seg- append
-			seg = get_segment(gentle_outputs[end_prev_anchor:],\
-			rel_audio_start, False)	
-			
-			segs.append(seg)
