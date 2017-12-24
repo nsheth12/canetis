@@ -13,6 +13,11 @@ __pycache__/
 # C extensions
 *.so
 
+#Kian's stuff
+gentle/
+gentle-venv/
+
+
 # Distribution / packaging
 .Python
 build/

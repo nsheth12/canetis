@@ -98,7 +98,7 @@ def segmentize (gentle_outputs, anchor_length=3, rel_audio_start=0):
 				# store the previous unanchored segments as a seg- append
 				seg = get_segment(gentle_outputs[end_prev_anchor:],\
 				rel_audio_start, False)	
-				
+
 				segs.append(seg)
 
 	return segs
@@ -128,4 +128,27 @@ for i in x:
 	print(i.get_text())
 
 
+def update_segs(gentle_outputs, ):
+	if correct_count >= anchor_length:
 
+			#store the previous unanchored segments as a seg- append
+			seg = get_segment(gentle_outputs[end_prev_anchor:\
+			first_correct_index], rel_audio_start, False)	
+
+			segs.append(seg)	
+			
+			#store the anchor segment
+			seg = get_segment(gentle_outputs[first_correct_index:], \
+			rel_audio_start, True)
+			segs.append(seg)	
+			
+			# update end of prev anchor tracker
+			end_prev_anchor = index
+			
+		else: 
+
+			#store the previous unanchored segments as a seg- append
+			seg = get_segment(gentle_outputs[end_prev_anchor:],\
+			rel_audio_start, False)	
+			
+			segs.append(seg)
