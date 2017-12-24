@@ -52,25 +52,23 @@ def segmentize (gentle_outputs, anchor_length=3, rel_audio_start=0):
 	for index, output in enumerate(gentle_outputs):
 		# if the word was successfully aligned
 		if output["case"] == "success":
-
 			# update variable values and move on
 			correct_count += 1
 			
 			# update first_correct tracker
 			if not first_correct_index:
 				first_correct_index = index	
-		# if aligner doesn't work check if there are enough correct for anchor
+		# if unaligned check if there are enough correct for anchor
 		elif correct_count >= anchor_length:
-			
-			# store the previous unanchored segments as a seg- append
+			# store the previous unanchored segments as a seg and append
 			seg = get_segment(gentle_outputs[end_prev_anchor:\
-			first_correct_index], rel_audio_start, False)	
+				first_correct_index], rel_audio_start, False)	
 
 			segs.append(seg)	
 			
 			# store the anchor segment
 			seg = get_segment(gentle_outputs[first_correct_index:\
-			index], rel_audio_start, True)
+				index], rel_audio_start, True)
 			segs.append(seg)	
 			
 			# update end of prev anchor tracker
@@ -80,16 +78,16 @@ def segmentize (gentle_outputs, anchor_length=3, rel_audio_start=0):
 			correct_count = 0
 			first_correct_index = None
 
-			
+		# @Kian - can you add a comment explaining this if statement?
 		if index == len(gentle_outputs) - 1:
 			if correct_count >= anchor_length:
-				#store the previous unanchored segments as a seg- append
+				# store the previous unanchored segments as a seg and append
 				seg = get_segment(gentle_outputs[end_prev_anchor:\
 				first_correct_index], rel_audio_start, False)	
 
 				segs.append(seg)	
 				
-				#store the anchor segment
+				# store the anchor segment
 				seg = get_segment(gentle_outputs[first_correct_index:], \
 				rel_audio_start, True)
 				segs.append(seg)	
@@ -97,7 +95,7 @@ def segmentize (gentle_outputs, anchor_length=3, rel_audio_start=0):
 				# update end of prev anchor tracker
 				end_prev_anchor = index
 			else:
-				#store the previous unanchored segments as a seg- append
+				# store the previous unanchored segments as a seg- append
 				seg = get_segment(gentle_outputs[end_prev_anchor:],\
 				rel_audio_start, False)	
 				
@@ -123,8 +121,6 @@ test_output = [ {"case":"success", "word":"a", "audio_start":10}, \
 {"case": "fail", "word":"c", "audio_start":19}, \
 {"case": "success", "word":"d"}, \
 {"case":"success", "audio_end":20, "word":"d"}]
-
-
 		
 x = segmentize(test_output)
 

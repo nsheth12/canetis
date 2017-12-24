@@ -13,8 +13,7 @@ def recurse(gentle_output, audio_file_maybe_path, error_rate):
 	segs = segmentize(gentle_output)
 
 	if len(segs) == 1:
-		res.append(segs)
-		return res
+		return segs
 
 	res = []
 	# loop through each segment
