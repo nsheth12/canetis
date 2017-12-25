@@ -1,8 +1,8 @@
 from utils import gentle, segmentize
 
-def align(audio_file, text_file):
+def align(audio_filename, text_file):
 	# get audio and text files
-	
+
 	# run gentle and get output dictionary
 	# run recursion and set output equal to result array
 	# return result array 
