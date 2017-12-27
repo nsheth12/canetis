@@ -1,4 +1,4 @@
-from utils import gentle, segmentize
+from utils import run_gentle, segmentize
 
 def align(audio_filename, text_file):
 	# get audio and text files
@@ -27,6 +27,6 @@ def recurse(gentle_output, audio_file):
 			res.append(seg)
 		else:
 			# else add recurse(Gentle(segment))
-			res.append(recurse(gentle(seg)))
+			res.append(recurse(run_gentle(seg), audio_file))
 
 	return res
