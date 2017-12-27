@@ -9,14 +9,16 @@ def align(audio_filename, text_file):
 	pass
 
 
-def recurse(gentle_output, audio_file):
+def recurse(gentle_output, audio_file, anchor_length=3):
+
 	# if % unaligned in gentle_output < 5%, return gentle output
 	# call segmentize on gentle_output, getting list of segments
-	segs = segmentize(gentle_output, audio_file)
+	segs = segmentize(gentle_output, audio_file, anchor_length=anchor_length)
 
 	res = []
 
-	if len(segs) == 1:
+	#set it if its less than the min anchor length
+	if len(segs) < anchor_length : # or if seg.length = seg.prev_length- if gentle performance doesn't improve, we stop?
 		return segs
 
 	res = []
@@ -27,6 +29,6 @@ def recurse(gentle_output, audio_file):
 			res.append(seg)
 		else:
 			# else add recurse(Gentle(segment))
-			res.append(recurse(run_gentle(seg), audio_file))
+			res.append(recurse(run_gentle(seg), audio_file, anchor_length=anchor_length))
 
 	return res
