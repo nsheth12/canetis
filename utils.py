@@ -169,12 +169,8 @@ testAudio = AudioSegment.from_file("/home/kian/ML/SAIL/sail-forensic-gentle/gent
 seg = Segment(0, len(testAudio), [], True, testAudio)
 transcript_object = run_gentle(seg)
 words = transcript_object.words
-#for word in words:
-#	print(word.start, word.end, word.word, word.success())
 fix_unaligned(words, testAudio)
 
-#for word in words:
-#	print(word.start, word.end, word.word, word.success())
 
 segs = segmentize(words, "/home/kian/ML/SAIL/sail-forensic-gentle/gentle/examples/data/lucier.mp3")
 for seg in segs:
