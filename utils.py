@@ -7,9 +7,13 @@ import gentle
 
 from segment import Segment
 from pydub import AudioSegment
-import os
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
-def gentle(seg, audio_file):
+import os
+import json
+
+def run_gentle(seg):
 	"""
 	takes in a segment
 	1. create new text file containing text
@@ -17,26 +21,28 @@ def gentle(seg, audio_file):
 	3. run Gentle with these two
 	4. delete text file/audio files
 	"""
-	transcript = " ".join(seg.get_text())
+	# transcript = " ".join(seg.get_text())
+	transcript = "I am sitting in a room different from the one you are in now. I am recording the sound of my speaking voice and I am going to play it back into the room again and again until the resonant frequencies of the room reinforce themselves so that any semblance of my speech, with perhaps the exception of rhythm, is destroyed. What you will hear, then, are the natural resonant frequencies of the room articulated by speech. I regard this activity not so much as a demonstration of a physical fact, but more as a way to smooth out any irregularities my speech might have."
 
 	# I think they are wav files, but not sure
-	audio_full = AudioSegment.from_file(audio_file, format="wav")
+	audio_full = AudioSegment.from_file(seg.audio_file, format="mp3")
 	audio_cut = audio_full[seg.start_audio:seg.end_audio]
-	audio_cut.export("temp_audio.wav", format="wav")
+	audio_cut.export("temp_audio.mp3", format="mp3")
 
 	# run Gentle
 	resources = gentle.Resources()
-	with gentle.resampled("temp_audio.wav") as wavfile:
+	with gentle.resampled("temp_audio.mp3") as wavfile:
 		aligner = gentle.ForcedAligner(resources, transcript)
 		result = aligner.transcribe(wavfile)
 
 	# delete cut audio file
-	os.remove("temp_audio.wav")
+	os.remove("temp_audio.mp3")
 
 	return result
 
 
-def segmentize (gentle_outputs, anchor_length=3, rel_audio_start=0):
+def segmentize (gentle_outputs, audio_file, 
+				anchor_length=3, rel_audio_start=0):
 	"""
 	takes in Gentle output (array of dicts)
 	break into segments which marked as aligned or unaligned
@@ -64,13 +70,13 @@ def segmentize (gentle_outputs, anchor_length=3, rel_audio_start=0):
 		elif correct_count >= anchor_length:
 			# store the previous unanchored segments as a seg and append
 			seg = get_segment(gentle_outputs[end_prev_anchor:\
-				first_correct_index], rel_audio_start, False)	
+				first_correct_index], rel_audio_start, False, audio_file)	
 
 			segs.append(seg)	
 			
 			# store the anchor segment
 			seg = get_segment(gentle_outputs[first_correct_index:\
-				index], rel_audio_start, True)
+				index], rel_audio_start, True, audio_file)
 			segs.append(seg)	
 			
 			# update end of prev anchor tracker
@@ -84,14 +90,14 @@ def segmentize (gentle_outputs, anchor_length=3, rel_audio_start=0):
 		if index == len(gentle_outputs) - 1:
 			if correct_count >= anchor_length:
 				# store the previous unanchored segments as a seg and append
-				seg = get_segment(gentle_outputs[end_prev_anchor:\
-				first_correct_index], rel_audio_start, False)	
+				seg = get_segment(gentle_outputs[end_prev_anchor: \
+					first_correct_index], rel_audio_start, False, audio_file)	
 
 				segs.append(seg)	
 				
 				# store the anchor segment
 				seg = get_segment(gentle_outputs[first_correct_index:], \
-				rel_audio_start, True)
+					rel_audio_start, True, audio_file)
 				segs.append(seg)	
 				
 				# update end of prev anchor tracker
@@ -99,35 +105,25 @@ def segmentize (gentle_outputs, anchor_length=3, rel_audio_start=0):
 			else:
 				# store the previous unanchored segments as a seg- append
 				seg = get_segment(gentle_outputs[end_prev_anchor:],\
-				rel_audio_start, False)	
+					rel_audio_start, False, audio_file)	
 
 				segs.append(seg)
 
 	return segs
 
-def get_segment(gentle_output, rel_audio_start, aligned):
-
+def get_segment(gentle_output, rel_audio_start, aligned, audio_file):
 	# relative audio start time plus the audio time of the first/last word
 	audio_start = rel_audio_start + gentle_output[0]["audio_start"]
 	audio_finish = rel_audio_start + gentle_output[-1]["audio_end"]
 
-	seg = Segment(audio_start, audio_finish, gentle_output, aligned)
+	seg = Segment(audio_start, audio_finish,
+				  gentle_output, aligned, audio_file)
 	
 	return seg
 
-
-test_output = [ {"case":"success", "word":"a", "audio_start":10}, \
-{"case": "fail", "word":"b", "audio_end":17}, \
-{"case": "success", "word":"c", "audio_start":10}, \
-{"case": "success", "word":"c"}, \
-{"case": "success", "word":"c",  "audio_end":19}, \
-{"case": "fail", "word":"c", "audio_start":19}, \
-{"case": "success", "word":"d"}, \
-{"case":"success", "audio_end":20, "word":"d"}]
-		
-x = segmentize(test_output)
-
-for i in x:
-	print(i.get_text())
-
-
+testAudio = AudioSegment.from_file("/home/kian/ML/SAIL/sail-forensic-gentle/gentle/examples/data/lucier.mp3")
+seg = Segment(0, len(testAudio), [], True, "/home/kian/ML/SAIL/sail-forensic-gentle/gentle/examples/data/lucier.mp3")
+transcript_object = run_gentle(seg)
+words = transcript_object.words
+for word in words:
+	print(word.word)
