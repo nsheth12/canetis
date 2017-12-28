@@ -51,7 +51,7 @@ def segmentize (gentle_outputs, audio_file,
 	# store all segments
 	segs = []
 
-	# run through the list of gentle output dictionaries
+	# run through the list of Word objects
 	for index, word in enumerate(gentle_outputs):
 		# if the word was successfully aligned
 		if word.success():
@@ -142,9 +142,9 @@ testAudio = AudioSegment.from_file("/Users/nihar/Nihar/SAIL/gentle/examples/data
 seg = Segment(0, len(testAudio), [], True, testAudio)
 transcript_object = run_gentle(seg)
 words = transcript_object.words
-for word in words:
-	print(word.start, word.end, word.word, word.success())
 fix_unaligned(words, testAudio)
-segs = segmentize(words, "/Users/nihar/Nihar/SAIL/gentle/examples/data/lucier.mp3")
+#for word in words:
+#	print(word.start, word.end, word.word, word.success())
+segs = segmentize(words, testAudio)
 for seg in segs:
 	print(seg.start_audio, seg.end_audio, seg.aligned)
