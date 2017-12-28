@@ -11,12 +11,10 @@ def align(audio_file_path, text_file_path):
 	with open(text_file_path, "r") as text_file:
 		transcript = text_file.readlines()[0]
 
-	print(transcript)
+
 
 	#store audio as a seg and run gentle
 	audio_segment = Segment(0, len(audio_file), [], True, audio_file, None)
-
-	print(audio_segment)
 
 	gentle_output = run_gentle(audio_segment, transcript)
 
@@ -59,7 +57,12 @@ def recurse(gentle_output, audio_file, anchor_length=3):
 		elif len(seg.gentle) == seg.parent_seg_len:	
 			res.append(seg)
 
+		# if there is no space between anchor points, discard unaligned seg
+		elif (seg.end_audio - seg.start_audio) < .001:
+			pass
+
 		else:
+			print(seg.get_text())
 			# else add run recursion through recurse(Gentle(segment))
 			res.append(recurse(run_gentle(seg, seg.get_text()),
 			audio_file, anchor_length=anchor_length))
@@ -73,5 +76,7 @@ def recurse(gentle_output, audio_file, anchor_length=3):
 audio_file_path = "/home/kian/ML/SAIL/sail-forensic-gentle/gentle/examples/data/lucier.mp3"
 text_file_path = "/home/kian/ML/SAIL/sail-forensic-gentle/gentle/examples/data/lucier.txt"
 
-print(align(audio_file_path, text_file_path))
+result = align(audio_file_path, text_file_path)
 
+for seg in result:
+	print(seg.gentle_output)

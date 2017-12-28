@@ -28,8 +28,11 @@ def run_gentle(seg, transcript):
 	# I think they are wav files, but not sure
 	# audio_full = AudioSegment.from_file(seg.audio_file, format="mp3")
 	audio_cut = seg.audio_file[seg.start_audio:seg.end_audio]
+
+	print("Audio Len", len(audio_cut))
 	
-	audio_cut.export("temp_audio.wav", format="wav", codec="libmp3lame")
+	audio_cut.export("temp_audio.wav", format="wav")
+
 
 	# run Gentle
 	resources = gentle.Resources()
