@@ -1,4 +1,6 @@
 import sys
+
+#add path to gentle directory and gentle code directory
 sys.path.append("/Users/nihar/Nihar/SAIL/gentle")
 sys.path.append("/Users/nihar/Nihar/SAIL/gentle/gentle")
 sys.path.append("/home/kian/ML/SAIL/sail-forensic-gentle/gentle")
@@ -6,6 +8,8 @@ sys.path.append("/home/kian/ML/SAIL/sail-forensic-gentle/gentle/gentle")
 
 from segment import Segment
 from pydub import AudioSegment
+
+# no idea why- ask Nihar
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -54,13 +58,13 @@ def recurse(gentle_output, audio_file, anchor_length=3):
 			# if aligned --> add to res as is
 			res.append(seg)
 
-		# if there is no improvement in alignment, give up on recurse 
-		# and add the unaligned segment
+		#  there is no improvement in alignment --> add unaligned to res as is
 		elif len(seg.gentle) == seg.parent_seg_len:	
 			res.append(seg)
 
 		else:
 			# else add run recursion through recurse(Gentle(segment))
-			res.append(recurse(run_gentle(seg, seg.get_text()), audio_file, anchor_length=anchor_length))
+			res.append(recurse(run_gentle(seg, seg.get_text()),
+			audio_file, anchor_length=anchor_length))
 
 	return res

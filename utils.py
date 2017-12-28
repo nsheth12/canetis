@@ -1,18 +1,22 @@
+
+
+import os
+import json
+from segment import Segment
+from pydub import AudioSegment
+
 import sys
+#add path to gentle directory and gentle code directory
 sys.path.append("/Users/nihar/Nihar/SAIL/gentle")
 sys.path.append("/Users/nihar/Nihar/SAIL/gentle/gentle")
 sys.path.append("/home/kian/ML/SAIL/sail-forensic-gentle/gentle")
 sys.path.append("/home/kian/ML/SAIL/sail-forensic-gentle/gentle/gentle")
 import gentle
 
-from segment import Segment
-from pydub import AudioSegment
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
 
-import os
-import json
 
 def run_gentle(seg, transcript):
 	"""
@@ -41,7 +45,7 @@ def run_gentle(seg, transcript):
 	os.remove("temp_audio.wav")
 
 	#fix unaligned-word start/end time data
-	result = fix_unaligned(result)
+	fix_unaligned(result)
 
 	return result
 
@@ -176,6 +180,11 @@ def get_segment (gentle_output, rel_audio_start, aligned, audio_file, total_gent
 	
 	return seg
 
+
+
+"""
+Testing Helpers
+
 testAudio = AudioSegment.from_file("/home/kian/ML/SAIL/sail-forensic-gentle/gentle/examples/data/lucier.mp3")
 seg = Segment(0, len(testAudio), [], True, testAudio)
 transcript_object = run_gentle(seg)
@@ -185,3 +194,5 @@ words = transcript_object.words
 segs = segmentize(words, "/home/kian/ML/SAIL/sail-forensic-gentle/gentle/examples/data/lucier.mp3")
 for seg in segs:
 	print(seg.start_audio, seg.end_audio, seg.aligned)
+	
+"""
