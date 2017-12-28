@@ -24,4 +24,8 @@ class Segment(object):
 		into gentle from the dictionary
 		values of gentle
 		"""
-		return [word.word for word in self.gentle]
+		words = [word.word for word in self.gentle]
+		text = " ".join(words)
+		return text
+
+	

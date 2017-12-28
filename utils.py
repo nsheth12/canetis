@@ -19,14 +19,13 @@ def run_gentle(seg, transcript):
 	3. run Gentle with these two
 	4. delete text file/audio files
 	"""
-	#transcript = " ".join(seg.get_text())
-	#transcript = "I am sitting in a room different from the one you are in now. I am recording the sound of my speaking voice and I am going to play it back into the room again and again until the resonant frequencies of the room reinforce themselves so that any semblance of my speech, with perhaps the exception of rhythm, is destroyed. What you will hear, then, are the natural resonant frequencies of the room articulated by speech. I regard this activity not so much as a demonstration of a physical fact, but more as a way to smooth out any irregularities my speech might have."
-
 	# I think they are wav files, but not sure
-	# audio_full = AudioSegment.from_file(seg.audio_file, format="mp3")
-	audio_cut = seg.audio_file[seg.start_audio:seg.end_audio]
+	audio_cut = seg.audio_file[1000 * seg.start_audio : 1000 * seg.end_audio]
+
+	print("Audio Len", len(audio_cut))
 	
-	audio_cut.export("temp_audio.wav", format="wav", codec="libmp3lame")
+	audio_cut.export("temp_audio.wav", format="wav")
+
 
 	# run Gentle
 	resources = gentle.Resources()
@@ -37,10 +36,13 @@ def run_gentle(seg, transcript):
 	# delete cut audio file
 	os.remove("temp_audio.wav")
 
-	# print(result)
-
 	#fix unaligned-word start/end time data
 	fix_unaligned(result, len(audio_cut))
+
+	#put gentle timestamps in relation to entire file
+	for word in result:
+		word.start += seg.start_audio
+		word.end += seg.start_audio
 
 	return result
 
@@ -76,7 +78,7 @@ def segmentize (gentle_outputs, audio_file,
 		# if unaligned check if there are enough correct for anchor
 		elif correct_count >= anchor_length:
 			
-			#check if there is an unaligned seg before anchor point
+			# check if there is an unaligned seg before anchor point
 			if end_prev_anchor != first_correct_index:
 				# store the previous unanchored segments as a seg and append
 				seg = get_segment(gentle_outputs[end_prev_anchor: \
@@ -99,22 +101,22 @@ def segmentize (gentle_outputs, audio_file,
 			first_correct_index = None
 
 		
-		#if we have reached the end of the audio file
-		#we need to segmentize all the remaining
-		#unsegmented part of the transcript/audiofile
+		# if we have reached the end of the audio file
+		# we need to segmentize all the remaining
+		# unsegmented part of the transcript/audiofile
 		if index == len(gentle_outputs) - 1:
 
 			#if current seg is an anchor point ...
 			if correct_count >= anchor_length:
-
 				
-				# get previous unanchored seg
-				seg = get_segment(gentle_outputs[end_prev_anchor: \
-					first_correct_index], rel_audio_start, False, audio_file,
-					total_gentle_len)	
+				if end_prev_anchor != first_correct_index:
+					# get previous unanchored seg
+					seg = get_segment(gentle_outputs[end_prev_anchor: \
+						first_correct_index], rel_audio_start, False, audio_file,
+						total_gentle_len)	
 
-				#store previous unanchored seg
-				segs.append(seg)	
+					# store previous unanchored seg
+					segs.append(seg)	
 
 				# get the anchor segment
 				seg = get_segment(gentle_outputs[first_correct_index:], \
@@ -133,7 +135,7 @@ def segmentize (gentle_outputs, audio_file,
 				if end_prev_anchor != first_correct_index:
 					# store the previous unanchored segments as a seg- append
 					seg = get_segment(gentle_outputs[end_prev_anchor:], \
-						rel_audio_start, False, audio_file)	
+						rel_audio_start, False, audio_file, total_gentle_len)	
 					segs.append(seg)
 
 	return segs
@@ -175,17 +177,3 @@ def get_segment (gentle_output, rel_audio_start, aligned, audio_file, total_gent
 	
 	return seg
 
-
-
-"""
-Testing Helpers
-
-testAudio = AudioSegment.from_file("/home/kian/ML/SAIL/sail-forensic-gentle/gentle/examples/data/lucier.mp3")
-seg = Segment(0, len(testAudio), [], True, testAudio)
-transcript_object = run_gentle(seg)
-words = transcript_object.words
-fix_unaligned(words, testAudio)
-#for word in words:
-#	print(word.start, word.end, word.word, word.success())
-segs = segmentize(words, testAudio)
-"""
