@@ -9,35 +9,28 @@ from pydub import AudioSegment
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-from utils import run_gentle, segmentize, fix_unaligned
+from utils import run_gentle, segmentize
 
 
 def align(audio_file_path, text_file_path):
 	# load file
-	audio = AudioSegment.from_file(audio_file_path)
+	audio_file = AudioSegment.from_file(audio_file_path)
 
 	#load transcript
 	with open(text_file_path, "r") as text_file:
 		transcript = text_file.readlines()
 
 	#store audio as a seg and run gentle
-	audio_segment = Segment(0, len(audio), [], True, audio, None)
-	gentle_output = run_gentle(seg, transcript)
+	audio_segment = Segment(0, len(audio_file), [], True, audio_file, None)
+	gentle_output = run_gentle(audio_segment, transcript)
 
-	result = recurse(gentle_output, audio, anchor_length=3)
+	#run Moreno's algorithm on initial gentle output
+	result = recurse(gentle_output, audio_file, anchor_length=3)
 
+
+	#return result of Moreno's algorithm
 	return result
 
-
-
-
-
-segs = segmentize(words, "/home/kian/ML/SAIL/sail-forensic-gentle/gentle/examples/data/lucier.mp3")
-
-	# run gentle and get output dictionary
-
-	# run recursion and set output equal to result array
-	# return result array 
 	
 
 
