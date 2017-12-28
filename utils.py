@@ -43,10 +43,13 @@ def run_gentle(seg, transcript):
 	# delete cut audio file
 	os.remove("temp_audio.wav")
 
-	print(result)
-
 	#fix unaligned-word start/end time data
 	fix_unaligned(result, len(audio_cut))
+
+	#put gentle timestamps in relation to entire file
+	for word in result:
+		word.start += seg.start_audio
+		word.end += seg.start_audio
 
 	return result
 

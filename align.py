@@ -79,4 +79,6 @@ text_file_path = "/home/kian/ML/SAIL/sail-forensic-gentle/gentle/examples/data/l
 result = align(audio_file_path, text_file_path)
 
 for seg in result:
-	print(seg.gentle_output)
+	words = seg.gentle
+	for word in words:
+		print(word.word, word.start, word.end, word.success())
