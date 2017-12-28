@@ -18,6 +18,7 @@ class Segment(object):
 		self.audio_file = audio_file
 		self.parent_seg_len = parent_seg_len
 	
+
 	def get_text (self):
 		"""
 		get the text to pass
@@ -27,5 +28,3 @@ class Segment(object):
 		words = [word.word for word in self.gentle]
 		text = " ".join(words)
 		return text
-
-	
