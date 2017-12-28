@@ -22,7 +22,7 @@ def run_gentle(seg, transcript):
 	# I think they are wav files, but not sure
 	audio_cut = seg.audio_file[1000 * seg.start_audio : 1000 * seg.end_audio]
 
-	print("Audio Len", len(audio_cut))
+	# print("Audio Len", len(audio_cut))
 	
 	audio_cut.export("temp_audio.wav", format="wav")
 

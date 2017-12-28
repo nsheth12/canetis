@@ -19,7 +19,7 @@ def align(audio_file_path, text_file_path):
 	#run Moreno's algorithm on initial gentle output
 	result = recurse(gentle_output, audio_file, anchor_length=3)
 
-	#return result of Moreno's algorithm
+	# return result of Moreno's algorithm
 	return result
 
 
@@ -56,9 +56,17 @@ def recurse(gentle_output, audio_file, anchor_length=3):
 audio_file_path = "/Users/nihar/Nihar/SAIL/sample_alignment_data/obama_interview_audio.mp3"
 text_file_path = "/Users/nihar/Nihar/SAIL/sample_alignment_data/obama_interview_transcript.txt"
 
-result = align(audio_file, text_file)
+result = align(audio_file_path, text_file_path)
 
+alignedCount = 0
+totalCount = 0
 for seg in result:
 	words = seg.gentle
 	for word in words:
 		print(word.word, word.start, word.end, word.success())
+		if word.success():
+			alignedCount += 1
+		totalCount += 1
+
+print("Moreno words aligned: ", alignedCount)
+print("Total count: ", totalCount)
