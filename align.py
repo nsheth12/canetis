@@ -9,11 +9,7 @@ def align(audio_file_path, text_file_path):
 
 	# load transcript
 	with open(text_file_path, "r") as text_file:
-<<<<<<< HEAD
 		transcript = text_file.read()
-=======
-		transcript = text_file.readlines()[0]
->>>>>>> 02984fe734fdbf619458743e14d5ad4a46874f99
 
 	#store audio as a seg and run gentle
 	audio_segment = Segment(0, len(audio_file), [], True, audio_file, None)
@@ -37,25 +33,12 @@ def recurse(gentle_output, audio_file, anchor_length=3):
 
 	res = []
 
-<<<<<<< HEAD
-=======
-	# set it if its less than the min anchor length
-	# if len(segs) < anchor_length : 
-
-	res = []
-
->>>>>>> 02984fe734fdbf619458743e14d5ad4a46874f99
 	# loop through each segment
 	for seg in segs:
 		if seg.aligned:
 			# if aligned --> add to res as is
 			res.append(seg)
-<<<<<<< HEAD
 		#  there is no improvement in alignment --> add unaligned to res as is
-=======
-
-		# there is no improvement in alignment --> add unaligned to res as is
->>>>>>> 02984fe734fdbf619458743e14d5ad4a46874f99
 		elif len(seg.gentle) == seg.parent_seg_len:	
 			res.append(seg)
 		# if there is no space between anchor points, discard unaligned seg
@@ -69,18 +52,9 @@ def recurse(gentle_output, audio_file, anchor_length=3):
 
 	return res
 
-
-<<<<<<< HEAD
 # Set up test
 audio_file_path = "/Users/nihar/Nihar/SAIL/sample_alignment_data/obama_interview_audio.mp3"
 text_file_path = "/Users/nihar/Nihar/SAIL/sample_alignment_data/obama_interview_transcript.txt"
-=======
-
-
-# Set up test
-audio_file = "/home/kian/ML/SAIL/sail-forensic-gentle/gentle/examples/data/lucier.mp3"
-text_file = "/home/kian/ML/SAIL/sail-forensic-gentle/gentle/examples/data/lucier.txt"
->>>>>>> 02984fe734fdbf619458743e14d5ad4a46874f99
 
 result = align(audio_file, text_file)
 
