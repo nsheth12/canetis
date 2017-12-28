@@ -13,10 +13,6 @@ sys.path.append("/home/kian/ML/SAIL/sail-forensic-gentle/gentle")
 sys.path.append("/home/kian/ML/SAIL/sail-forensic-gentle/gentle/gentle")
 import gentle
 
-reload(sys)
-sys.setdefaultencoding('utf-8')
-
-
 
 def run_gentle(seg, transcript):
 	"""
