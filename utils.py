@@ -39,13 +39,15 @@ def run_gentle(seg, transcript):
 	resources = gentle.Resources()
 	with gentle.resampled("temp_audio.wav") as wavfile:
 		aligner = gentle.ForcedAligner(resources, transcript)
-		result = aligner.transcribe(wavfile)
+		result = aligner.transcribe(wavfile).words
 
 	# delete cut audio file
 	os.remove("temp_audio.wav")
 
+	print(result)
+
 	#fix unaligned-word start/end time data
-	fix_unaligned(result)
+	fix_unaligned(result, len(audio_cut))
 
 	return result
 
@@ -144,7 +146,7 @@ def segmentize (gentle_outputs, audio_file,
 	return segs
 
 
-def fix_unaligned (gentle_output, audio_file):
+def fix_unaligned (gentle_output, audio_file_length):
 	"""
 	Give approximate start/end times to unaligned words in the Gentle output.
 
@@ -160,7 +162,7 @@ def fix_unaligned (gentle_output, audio_file):
 		else:
 			initialStart = word.end
 
-	initialEnd = len(audio_file)
+	initialEnd = audio_file_length
 	for word in gentle_output[::-1]:
 		if not word.success():
 			word.end = initialEnd

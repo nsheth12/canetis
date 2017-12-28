@@ -9,10 +9,15 @@ def align(audio_file_path, text_file_path):
 
 	#load transcript
 	with open(text_file_path, "r") as text_file:
-		transcript = text_file.readlines()
+		transcript = text_file.readlines()[0]
+
+	print(transcript)
 
 	#store audio as a seg and run gentle
 	audio_segment = Segment(0, len(audio_file), [], True, audio_file, None)
+
+	print(audio_segment)
+
 	gentle_output = run_gentle(audio_segment, transcript)
 
 	#run Moreno's algorithm on initial gentle output
@@ -31,6 +36,8 @@ def recurse(gentle_output, audio_file, anchor_length=3):
 	# call segmentize on gentle_output, getting list of segments
 	segs = segmentize(gentle_output, audio_file, anchor_length=anchor_length)
 
+	print(segs)
+
 	res = []
 
 	#set it if its less than the min anchor length
@@ -40,6 +47,9 @@ def recurse(gentle_output, audio_file, anchor_length=3):
 	res = []
 	# loop through each segment
 	for seg in segs:
+
+		print(seg.start_audio, seg.end_audio, seg.aligned)
+
 		if seg.aligned:
 
 			# if aligned --> add to res as is
@@ -55,3 +65,13 @@ def recurse(gentle_output, audio_file, anchor_length=3):
 			audio_file, anchor_length=anchor_length))
 
 	return res
+
+
+
+
+#Set up test
+audio_file_path = "/home/kian/ML/SAIL/sail-forensic-gentle/gentle/examples/data/lucier.mp3"
+text_file_path = "/home/kian/ML/SAIL/sail-forensic-gentle/gentle/examples/data/lucier.txt"
+
+print(align(audio_file_path, text_file_path))
+
