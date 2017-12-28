@@ -18,14 +18,18 @@ def recurse(gentle_output, audio_file, anchor_length=3):
 	res = []
 
 	#set it if its less than the min anchor length
-	if len(segs) < anchor_length : # or if seg.length = seg.prev_length- if gentle performance doesn't improve, we stop?
-		return segs
+	#if len(segs) < anchor_length : 
+	#	return segs
 
 	res = []
 	# loop through each segment
 	for seg in segs:
 		if seg.aligned:
 			# if aligned --> add to res as is
+			res.append(seg)
+
+		#if there is no improvement in alignment, add the seg
+		elif len(seg.gentle) == seg.parent_seg_len:
 			res.append(seg)
 		else:
 			# else add recurse(Gentle(segment))

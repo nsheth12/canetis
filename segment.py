@@ -6,7 +6,7 @@ class Segment(object):
 	during a recursive call
 	"""
 	
-	def __init__ (self, start_audio, end_audio, gentle_output, aligned, audio_file):
+	def __init__ (self, start_audio, end_audio, gentle_output, aligned, audio_file, parent_seg_len):
 		"""
 		Initialize start audio to be the start of the segment
 		being recursively called, then update that value
@@ -16,6 +16,7 @@ class Segment(object):
 		self.gentle = gentle_output
 		self.aligned = aligned
 		self.audio_file = audio_file
+		self.parent_seg_len = parent_seg_len
 	
 	def get_text (self):
 		"""
