@@ -114,5 +114,8 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+# output files
+*.txt
+
 # End of https://www.gitignore.io/api/python
 
