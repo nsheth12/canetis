@@ -1,12 +1,44 @@
-from utils import run_gentle, segmentize
+import sys
+sys.path.append("/Users/nihar/Nihar/SAIL/gentle")
+sys.path.append("/Users/nihar/Nihar/SAIL/gentle/gentle")
+sys.path.append("/home/kian/ML/SAIL/sail-forensic-gentle/gentle")
+sys.path.append("/home/kian/ML/SAIL/sail-forensic-gentle/gentle/gentle")
 
-def align(audio_filename, text_file):
-	# get audio and text files
+from segment import Segment
+from pydub import AudioSegment
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
+from utils import run_gentle, segmentize, fix_unaligned
+
+
+def align(audio_file_path, text_file_path):
+	# load file
+	audio = AudioSegment.from_file(audio_file_path)
+
+	#load transcript
+	with open(text_file_path, "r") as text_file:
+		transcript = text_file.readlines()
+
+	#store audio as a seg and run gentle
+	audio_segment = Segment(0, len(audio), [], True, audio, None)
+	gentle_output = run_gentle(seg, transcript)
+
+	result = recurse(gentle_output, audio, anchor_length=3)
+
+	return result
+
+
+
+
+
+segs = segmentize(words, "/home/kian/ML/SAIL/sail-forensic-gentle/gentle/examples/data/lucier.mp3")
 
 	# run gentle and get output dictionary
+
 	# run recursion and set output equal to result array
 	# return result array 
-	pass
+	
 
 
 def recurse(gentle_output, audio_file, anchor_length=3):
@@ -25,14 +57,17 @@ def recurse(gentle_output, audio_file, anchor_length=3):
 	# loop through each segment
 	for seg in segs:
 		if seg.aligned:
+
 			# if aligned --> add to res as is
 			res.append(seg)
 
-		#if there is no improvement in alignment, add the seg
-		elif len(seg.gentle) == seg.parent_seg_len:
+		# if there is no improvement in alignment, give up on recurse 
+		# and add the unaligned segment
+		elif len(seg.gentle) == seg.parent_seg_len:	
 			res.append(seg)
+
 		else:
-			# else add recurse(Gentle(segment))
-			res.append(recurse(run_gentle(seg), audio_file, anchor_length=anchor_length))
+			# else add run recursion through recurse(Gentle(segment))
+			res.append(recurse(run_gentle(seg, seg.get_text()), audio_file, anchor_length=anchor_length))
 
 	return res

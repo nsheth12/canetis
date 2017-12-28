@@ -14,7 +14,7 @@ sys.setdefaultencoding('utf-8')
 import os
 import json
 
-def run_gentle(seg):
+def run_gentle(seg, transcript):
 	"""
 	takes in a segment
 	1. create new text file containing text
@@ -22,8 +22,8 @@ def run_gentle(seg):
 	3. run Gentle with these two
 	4. delete text file/audio files
 	"""
-	# transcript = " ".join(seg.get_text())
-	transcript = "I am sitting in a room different from the one you are in now. I am recording the sound of my speaking voice and I am going to play it back into the room again and again until the resonant frequencies of the room reinforce themselves so that any semblance of my speech, with perhaps the exception of rhythm, is destroyed. What you will hear, then, are the natural resonant frequencies of the room articulated by speech. I regard this activity not so much as a demonstration of a physical fact, but more as a way to smooth out any irregularities my speech might have."
+	#transcript = " ".join(seg.get_text())
+	#transcript = "I am sitting in a room different from the one you are in now. I am recording the sound of my speaking voice and I am going to play it back into the room again and again until the resonant frequencies of the room reinforce themselves so that any semblance of my speech, with perhaps the exception of rhythm, is destroyed. What you will hear, then, are the natural resonant frequencies of the room articulated by speech. I regard this activity not so much as a demonstration of a physical fact, but more as a way to smooth out any irregularities my speech might have."
 
 	# I think they are wav files, but not sure
 	# audio_full = AudioSegment.from_file(seg.audio_file, format="mp3")
@@ -39,6 +39,8 @@ def run_gentle(seg):
 
 	# delete cut audio file
 	os.remove("temp_audio.wav")
+
+	
 
 	return result
 
@@ -177,7 +179,6 @@ testAudio = AudioSegment.from_file("/home/kian/ML/SAIL/sail-forensic-gentle/gent
 seg = Segment(0, len(testAudio), [], True, testAudio)
 transcript_object = run_gentle(seg)
 words = transcript_object.words
-fix_unaligned(words, testAudio)
 
 
 segs = segmentize(words, "/home/kian/ML/SAIL/sail-forensic-gentle/gentle/examples/data/lucier.mp3")
