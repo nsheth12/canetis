@@ -8,7 +8,10 @@ sys.path.append("/Users/nihar/Nihar/SAIL/gentle")
 sys.path.append("/Users/nihar/Nihar/SAIL/gentle/gentle")
 sys.path.append("/home/kian/ML/SAIL/sail-forensic-gentle/gentle")
 sys.path.append("/home/kian/ML/SAIL/sail-forensic-gentle/gentle/gentle")
-import gentle
+sys.path.insert(0,"/home/coder/Desktop/alignment_nihar_kian/gentle")
+sys.path.insert(0, "/home/coder/Desktop/alignment_nihar_kian/gentle/gentle")
+
+import gentle as gentle
 
 
 def run_gentle(seg, transcript):
@@ -35,12 +38,13 @@ def run_gentle(seg, transcript):
 
 	# delete cut audio file
 	os.remove("temp_audio.wav")
-
+	
+	
 	#fix unaligned-word start/end time data
-	fix_unaligned(result, len(audio_cut))
+	fix_unaligned(result, len(audio_cut)/1000)
 
 	#put gentle timestamps in relation to entire file
-	for word in result:
+	for word in result:	
 		word.start += seg.start_audio
 		word.end += seg.start_audio
 
@@ -101,7 +105,13 @@ def segmentize (gentle_outputs, audio_file,
 			correct_count = 0
 			first_correct_index = None
 
+		elif index < len(gentle_outputs) - 1:
+
+			# reset counter variables
+			correct_count = 0
+			first_correct_index = None
 		
+
 		# if we have reached the end of the audio file
 		# we need to segmentize all the remaining
 		# unsegmented part of the transcript/audiofile
@@ -131,14 +141,12 @@ def segmentize (gentle_outputs, audio_file,
 			
 			# if current segment does not qualify as an anchor point
 			else:
-
-				# check if there is an unaligned seg before anchor point
-				if end_prev_anchor != first_correct_index:
 					
-					# store the previous unanchored segments as a seg- append
-					seg = get_segment(gentle_outputs[end_prev_anchor:], \
-						rel_audio_start, False, audio_file, total_gentle_len)	
-					segs.append(seg)
+				# store the previous unanchored segments as a seg- append
+				seg = get_segment(gentle_outputs[end_prev_anchor:], \
+					rel_audio_start, False, audio_file, total_gentle_len)	
+				segs.append(seg)
+		
 
 	return segs
 
