@@ -114,6 +114,7 @@ def segmentize(gentle_outputs, audio_file,
             # Then just store all the remaining words as an unanchored segment    
             
             else:
+
                 # store the previous unanchored segments as a seg- append
                 seg = get_segment(gentle_outputs[end_prev_anchor:], \
                 rel_audio_start, False, audio_file, total_gentle_len)	
@@ -124,14 +125,19 @@ def segmentize(gentle_outputs, audio_file,
 
 
 
-def get_segment (gentle_output, rel_audio_start, aligned, audio_file, total_gentle_len):
+def get_segment (bounded_gentle_output, rel_audio_start, aligned, audio_file, total_gentle_len):
+
+    """
+    Helper function to easily convert a bounded
+    portion of gentle output into a Segment
+    """
 
     # relative audio start time plus the audio time of the first/last word
-    audio_start = rel_audio_start + gentle_output[0].start
-    audio_finish = rel_audio_start + gentle_output[-1].end
+    audio_start = rel_audio_start + bounded_gentle_output[0].start
+    audio_finish = rel_audio_start + bounded_gentle_output[-1].end
 
     seg = Segment(audio_start, audio_finish,
-    gentle_output, aligned, audio_file,
+    bounded_gentle_output, aligned, audio_file,
     total_gentle_len)
-	
+
     return seg
