@@ -31,30 +31,26 @@ the number of total aligned words.
 
 Dependencies
 
-Requires Python 2
-Pydub- pip install pydub
-Gentle- Instructions available @ https://github.com/lowerquality/gentle
+Python 2. 
+Pydub - `pip install pydub`. 
+Gentle - Instructions available @ https://github.com/lowerquality/gentle. 
 
-Following Installation of Gentle, you must also add Gentle to your permanent python path, as well as the gentle folder found within gentle:
+Following installation of Gentle, you must also add Gentle to your permanent Python path, and you must add the `gentle` directory within the Gentle installation to the path:
 
-Linux/Mac 
+**Linux/Mac**
 
-Open .bashrc file
+Add the following 2 lines to your .bashrc file
 
-  nano /.bashrc
+  `export PYTHONPATH=/path/to/gentle/download:${PYTHONPATH}`. 
+  `export PYTHONPATH=/path/to/gentle/downlaod/gentle:${PYTHONPATH}`
 
-add the following 2 lines to your .bashrc file
+**Update Changes**
 
-  PYTHONPATH=/path/to/gentle/download:${PYTHONPATH}
-  PYTHONPATH=/path/to/gentle/downlaod/gentle:${PYTHONPATH} (both of these folders must be appended)
-
-Update Changes
-
-  source /.bashrc
+  `source /.bashrc`
 
 # Usage
 
-python2 align.py audio_file_path transcript_text_file_path
+`python2 align.py audio.wav transcript.txt`
 
-Prints out each word in the transcript, whether each word is aligned or unaligned, and the start time, and end time of each aligned word.
+Prints out each word in the transcript, whether each word is aligned or unaligned, the start time, and end time of each aligned word.
 
