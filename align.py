@@ -2,7 +2,6 @@ from segment import Segment
 from pydub import AudioSegment
 from utils import run_gentle, get_counts
 from segmentizer import segmentize 
-import csv
 
 
 def align(audio_file_path, text_file_path, anchor_length=15):
