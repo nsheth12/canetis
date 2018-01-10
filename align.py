@@ -2,6 +2,7 @@ from pydub import AudioSegment
 from segment import Segment
 from utils import run_gentle, get_counts
 from segmentizer import segmentize
+import sys
 
 
 def align(audio_file_path, text_file_path, anchor_length=7):
@@ -31,7 +32,6 @@ def align(audio_file_path, text_file_path, anchor_length=7):
     audio_segment = Segment(0, len(audio_file), [], True, audio_file, None)
     gentle_output = run_gentle(audio_segment, transcript)
 
-
     get_counts(gentle_output)
 
     # run Moreno's recursive algorithm on initial gentle output
@@ -55,7 +55,7 @@ def recurse(gentle_output, audio_file, anchor_length):
     -------
     res : list of Segment objects
     """
-    # convert gentle output into list of Segment objects
+    # convert Gentle output into list of Segment objects
     segs = segmentize(gentle_output, audio_file, anchor_length=anchor_length)
 
     res = []
@@ -77,3 +77,18 @@ def recurse(gentle_output, audio_file, anchor_length):
                                audio_file, anchor_length=anchor_length))
 
     return res
+
+if len(sys.argv) < 3:
+    print("Invalid command line arguments.")
+else:
+    result = align(sys.argv[1], sys.argv[2])
+
+    for seg in result:
+        words = seg.gentle
+        for word in words:
+            print_str = "'" + word.word + "'"
+            print_str += " aligned" if word.success() else " not aligned"
+            if word.success():
+                print_str += " starts at " + str(word.start)
+                print_str += " ends at " + str(word.end)
+            print(print_str)
