@@ -40,6 +40,7 @@ Following Installation of Gentle, you must also add Gentle to your permanent pyt
 Linux/Mac 
 
 Open .bashrc file
+
   nano /.bashrc
 
 add the following 2 lines to your .bashrc file
@@ -48,10 +49,12 @@ add the following 2 lines to your .bashrc file
   PYTHONPATH=/path/to/gentle/downlaod/gentle:${PYTHONPATH} (both of these folders must be appended)
 
 Update Changes
+
   source /.bashrc
 
 # Usage
 
 python2 align.py audio_file_path transcript_text_file_path
 
+Prints out each word in the transcript, whether each word is aligned or unaligned, and the start time, and end time of each aligned word.
 
