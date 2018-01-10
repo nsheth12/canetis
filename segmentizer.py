@@ -9,7 +9,7 @@ def segmentize(gentle_outputs, audio_file,
     Converts the list storing each word into a
     list of Segment Objects in order to break up
     Gentle's output into Anchor Points and recursive points.
-    
+
     Anchor Point is defined as a set of consecutively aligned
     words whose length is greater than the defined anchor length
     """
@@ -25,9 +25,9 @@ def segmentize(gentle_outputs, audio_file,
     # Array to store all final segments
     segs = []
 
-	# run through the list of Word objects
+    # run through the list of Word objects
     for index, word in enumerate(gentle_outputs):
-	
+
         if word.success():
 
             # if the word was successfully aligned
@@ -59,54 +59,55 @@ def segmentize(gentle_outputs, audio_file,
                 index], rel_audio_start, True, audio_file,
                 total_gentle_len)
 
-            segs.append(seg)	
+            segs.append(seg)
     
             # set the end prev_anchor tracker 
             # to the current location
             end_prev_anchor = index
 
-			# reset counter variables
-    	    correct_count = 0
-    	    first_correct_index = None
+            # reset counter variables
+            correct_count = 0
+            first_correct_index = None
 
         # Resets counter variables if the
         # current word is unaligned and is less
         # than the anchor length
         elif index < len(gentle_outputs) - 1:
             
-			# reset counter variables
-			correct_count = 0
-			first_correct_index = None
+            # reset counter variables
+            correct_count = 0
+            first_correct_index = None
 		
 
-		# if we have reached the end of the audio file
-		# we need to segmentize all the remaining
-		# unsegmented part of the transcript/audiofile
+        # if we have reached the end of the audio file
+        # we need to segmentize all the remaining
+        # unsegmented part of the transcript/audiofile
         # and reaccount for all cases
         if index == len(gentle_outputs) - 1:
 
-			# Case: current seg is an anchor point
+            # Case: current seg is an anchor point
             # Store unanchored segment 
             # Then store anchored segment
-    		if correct_count >= anchor_length:
-				
-				if end_prev_anchor != first_correct_index:
-					# get previous unanchored seg
-					seg = get_segment(gentle_outputs[end_prev_anchor: \
-						first_correct_index], rel_audio_start, False, audio_file,
-						total_gentle_len)	
+            if correct_count >= anchor_length:
 
-					# store previous unanchored seg
-					segs.append(seg)	
+                if end_prev_anchor != first_correct_index:
 
-				# get the anchor segment
-				seg = get_segment(gentle_outputs[first_correct_index:], \
-					rel_audio_start, True, audio_file, total_gentle_len)
+                    # get previous unanchored seg
+                    seg = get_segment(gentle_outputs[end_prev_anchor: \
+                        first_correct_index], rel_audio_start, False, audio_file,
+                        total_gentle_len)	
 
-				# store the anchor seg
-				segs.append(seg)	
-				
-				# update end of prev anchor tracker
+                    # store previous unanchored seg
+                    segs.append(seg)	
+
+                # get the anchor segment
+                seg = get_segment(gentle_outputs[first_correct_index:], \
+                    rel_audio_start, True, audio_file, total_gentle_len)
+
+                # store the anchor seg
+                segs.append(seg)	
+                
+                # update end of prev anchor tracker
                 end_prev_anchor = index
 
             # Case: current segment does not qualify as an anchor point
@@ -125,12 +126,12 @@ def segmentize(gentle_outputs, audio_file,
 
 def get_segment (gentle_output, rel_audio_start, aligned, audio_file, total_gentle_len):
 
-	# relative audio start time plus the audio time of the first/last word
-	audio_start = rel_audio_start + gentle_output[0].start
-	audio_finish = rel_audio_start + gentle_output[-1].end
+    # relative audio start time plus the audio time of the first/last word
+    audio_start = rel_audio_start + gentle_output[0].start
+    audio_finish = rel_audio_start + gentle_output[-1].end
 
-	seg = Segment(audio_start, audio_finish,
-				  gentle_output, aligned, audio_file,
-				  total_gentle_len)
+    seg = Segment(audio_start, audio_finish,
+    gentle_output, aligned, audio_file,
+    total_gentle_len)
 	
-	return seg
+    return seg
