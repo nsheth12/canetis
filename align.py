@@ -1,25 +1,12 @@
 from segment import Segment
 from pydub import AudioSegment
-from utils import run_gentle, segmentize
+from utils import run_gentle, get_counts
+from segmentizer import segmentize 
 import csv
-import pdb
-
-
-def get_counts(gentle_output):
-
- 	words_aligned = 0
-	total_count = 0
-	for word in gentle_output:
-		if word.success():
-			words_aligned+=1
-		total_count+=1
-
-	print("Gentle's words aligned:", words_aligned)
-	print("Gentle's Total Count:", total_count)
-
 
 
 def align(audio_file_path, text_file_path, anchor_length=15):
+
 	# load file
 	audio_file = AudioSegment.from_file(audio_file_path)
 
@@ -39,7 +26,7 @@ def align(audio_file_path, text_file_path, anchor_length=15):
 		
 	#print(len(gentle_output))
 	#run Moreno's algorithm on initial gentle output
-	result = recurse(gentle_output, audio_file, anchor_length=7)
+	result = recurse(gentle_output, audio_file, anchor_length=anchor_length)
 
 	# return result of Moreno's algorithm
 	return result
@@ -77,26 +64,4 @@ def recurse(gentle_output, audio_file, anchor_length=15):
 
 	return res
 
-# Set up test
-text_file_path = "/home/coder/Desktop/alignment_nihar_kian/kelly_qtype_cleaned/2-Adrian-5-Transcript.txt"
-audio_file_path = "/home/coder/Desktop/alignment_nihar_kian/mono8khz/2_16000.wav"
 
-result = align(audio_file_path, text_file_path)
-
-
-
-
-
-
-alignedCount = 0
-totalCount = 0
-for seg in result:
-	words = seg.gentle
-	for word in words:
-		#print(word.word, word.start, word.end, word.success())
-		if word.success():
-			alignedCount += 1
-		totalCount += 1
-
-print("Moreno words aligned: ", alignedCount)
-print("Total count: ", totalCount)
