@@ -4,8 +4,7 @@ This repo is a wrapper on top of the forced alignment library Gentle. On particu
 small errors have the potential to accumulate within the the Viterbi algorithm that is used by Gentle. In order to
 resolve this issue, our aligner implements Moreno's algorithm on top of Gentle.
 
-In the paper “A Recursive Algorithm for the Forced Alignment of very Long Audio Segments,” (available at this link:
-http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.649.6346&rep=rep1&type=pdf), Moreno proposes a new 
+In the paper [“A Recursive Algorithm for the Forced Alignment of very Long Audio Segments,”](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.649.6346&rep=rep1&type=pdf) Moreno proposes a new 
 recursive method of ensuring quality. Running a forced aligner down a long audio file creates a large possibility 
 of misalignment due to small errors that accumulates over the course of the file.
 
@@ -29,20 +28,22 @@ the number of total aligned words.
 
 # Installation Process
 
-Dependencies
+**Dependencies**
 
-Python 2. 
-Pydub - `pip install pydub`. 
-Gentle - Instructions available @ https://github.com/lowerquality/gentle. 
+1. Python 2
+2. Pydub - `pip install pydub`
+3. Gentle - Instructions available @ https://github.com/lowerquality/gentle. 
 
 Following installation of Gentle, you must also add Gentle to your permanent Python path, and you must add the `gentle` directory within the Gentle installation to the path:
 
 **Linux/Mac**
 
-Add the following 2 lines to your .bashrc file
+Add the following 2 lines to your `.bashrc` file
 
-  `export PYTHONPATH=/path/to/gentle/download:${PYTHONPATH}`. 
-  `export PYTHONPATH=/path/to/gentle/downlaod/gentle:${PYTHONPATH}`
+```bash
+export PYTHONPATH=/path/to/gentle/download:${PYTHONPATH}`
+export PYTHONPATH=/path/to/gentle/downlaod/gentle:${PYTHONPATH}
+```
 
 **Update Changes**
 
@@ -50,7 +51,9 @@ Add the following 2 lines to your .bashrc file
 
 # Usage
 
-`python2 align.py audio.wav transcript.txt`
+```bash
+python2 align.py audio.wav transcript.txt
+```
 
 Prints out each word in the transcript, whether each word is aligned or unaligned, the start time, and end time of each aligned word.
 
