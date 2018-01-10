@@ -1,7 +1,8 @@
-from segment import Segment
 from pydub import AudioSegment
+from segment import Segment
 from utils import run_gentle, get_counts
 from segmentizer import segmentize
+
 
 
 def align(audio_file_path, text_file_path, anchor_length=7):
@@ -19,6 +20,7 @@ def align(audio_file_path, text_file_path, anchor_length=7):
     -------
     result : list of Segment objects
     """
+
     # load file
     audio_file = AudioSegment.from_file(audio_file_path)
 
@@ -30,9 +32,10 @@ def align(audio_file_path, text_file_path, anchor_length=7):
     audio_segment = Segment(0, len(audio_file), [], True, audio_file, None)
     gentle_output = run_gentle(audio_segment, transcript)
 
+
     get_counts(gentle_output)
 
-    # run Moreno's algorithm on initial gentle output
+    # run Moreno's recursive algorithm on initial gentle output
     result = recurse(gentle_output, audio_file, anchor_length=anchor_length)
 
     # return result of Moreno's algorithm
@@ -53,7 +56,7 @@ def recurse(gentle_output, audio_file, anchor_length):
     -------
     res : list of Segment objects
     """
-    # call segmentize on gentle_output, getting list of segments
+    # convert gentle output into list of Segment objects
     segs = segmentize(gentle_output, audio_file, anchor_length=anchor_length)
 
     res = []
