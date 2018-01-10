@@ -5,7 +5,7 @@ from segment import Segment
 def segmentize(gentle_outputs, audio_file, 
                 anchor_length, rel_audio_start=0):
     """
-    takes in Gentle output (list of Word objects)
+    Takes in Gentle output (list of Word objects)
     Converts the list storing each word into a
     list of Segment Objects in order to break up
     Gentle's output into Anchor Points and recursive points.
@@ -13,7 +13,6 @@ def segmentize(gentle_outputs, audio_file,
     Anchor Point is defined as a set of consecutively aligned
     words whose length is greater than the defined anchor length
     """
-
     # variables to help with bounding Segments
     correct_count = 0
     end_prev_anchor = 0
@@ -124,22 +123,7 @@ def segmentize(gentle_outputs, audio_file,
     return segs
 
 
-
-<<<<<<< HEAD
-def get_segment (gentle_output, rel_audio_start, aligned, audio_file, total_gentle_len):
-<<<<<<< HEAD
-	# relative audio start time plus the audio time of the first/last word
-	audio_start = rel_audio_start + gentle_output[0].start
-	audio_finish = rel_audio_start + gentle_output[-1].end
-=======
-
-    # relative audio start time plus the audio time of the first/last word
-    audio_start = rel_audio_start + gentle_output[0].start
-    audio_finish = rel_audio_start + gentle_output[-1].end
->>>>>>> 350aeba1ba3523f4134a97e4e5ffd319b81fa926
-=======
 def get_segment (bounded_gentle_output, rel_audio_start, aligned, audio_file, total_gentle_len):
-
     """
     Helper function to easily convert a bounded
     portion of gentle output into a Segment
@@ -148,10 +132,9 @@ def get_segment (bounded_gentle_output, rel_audio_start, aligned, audio_file, to
     # relative audio start time plus the audio time of the first/last word
     audio_start = rel_audio_start + bounded_gentle_output[0].start
     audio_finish = rel_audio_start + bounded_gentle_output[-1].end
->>>>>>> 605577f1c92c6a71cea44313a12d39fff70e1f02
 
     seg = Segment(audio_start, audio_finish,
-    bounded_gentle_output, aligned, audio_file,
-    total_gentle_len)
+    			  bounded_gentle_output, aligned, audio_file,
+    			  total_gentle_len)
 
     return seg
