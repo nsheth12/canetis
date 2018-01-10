@@ -6,55 +6,61 @@ def segmentize (gentle_outputs, audio_file,
 				anchor_length, rel_audio_start=0):
 	"""
 	takes in Gentle output (list of Word objects)
-	break into segments which marked as aligned or unaligned
+	Converts the list storing each word into a
+    list of Segment Objects in order to break up
+    Gentle's output into Anchor Points and recursive points.
+
+    Anchor Point is defined as a set of consecutively aligned
+    words whose length is greater than the defined anchor length
 	"""
 
-	correct_count = 0
-	end_prev_anchor = 0
-	total_gentle_len = len(gentle_outputs)
+    # variables to help with bounding Segments
+    correct_count = 0
+    end_prev_anchor = 0
+    first_correct_index = None
 
-	# stores index of first correct point in a series
-	first_correct_index = None
+    #convenience variable 
+    total_gentle_len = len(gentle_outputs)
 
-	# store all segments
-	segs = []
+	# Array to store all segments
+    segs = []
 
 	# run through the list of Word objects
-	for index, word in enumerate(gentle_outputs):
+    for index, word in enumerate(gentle_outputs):
 		# if the word was successfully aligned
-		if word.success():
+    	if word.success():
 			# update variable values and move on
-			correct_count += 1
-			
+    		correct_count += 1
+
 			# update first_correct tracker
-			if first_correct_index is None:
-				first_correct_index = index	
+    		if first_correct_index is None:
+    			first_correct_index = index	
 
 
 		# if unaligned check if there are enough correct for anchor
-		elif correct_count >= anchor_length:
-			
+    	elif correct_count >= anchor_length:
+            
 			# check if there is an unaligned seg before anchor point
-			if end_prev_anchor != first_correct_index:
+    		if end_prev_anchor != first_correct_index:
 				# store the previous unanchored segments as a seg and append
-				seg = get_segment(gentle_outputs[end_prev_anchor: \
+    			seg = get_segment(gentle_outputs[end_prev_anchor: \
 					first_correct_index], rel_audio_start, False, audio_file,
-					total_gentle_len)	
-				segs.append(seg)
+    				total_gentle_len)	
+    			segs.append(seg)
 
 			# store the anchor segment
-			seg = get_segment(gentle_outputs[first_correct_index: \
+    		seg = get_segment(gentle_outputs[first_correct_index: \
 				index], rel_audio_start, True, audio_file,
-				total_gentle_len)
+    			total_gentle_len)
 
-			segs.append(seg)	
-			
+    		segs.append(seg)	
+    
 			# update end of prev anchor tracker
-			end_prev_anchor = index
+    		end_prev_anchor = index
 
 			# reset counter variables
-			correct_count = 0
-			first_correct_index = None
+    		correct_count = 0
+    		first_correct_index = None
 
 		elif index < len(gentle_outputs) - 1:
 
