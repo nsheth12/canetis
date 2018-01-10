@@ -3,7 +3,7 @@ from segment import Segment
 
 
 def segmentize(gentle_outputs, audio_file, 
-                anchor_length, rel_audio_start=0):
+                anchor_length):
     """
     Takes in Gentle output (list of Word objects)
     Converts the list storing each word into a
@@ -12,6 +12,12 @@ def segmentize(gentle_outputs, audio_file,
 
     Anchor Point is defined as a set of consecutively aligned
     words whose length is greater than the defined anchor length
+
+    Parameters
+    -----------------
+    Gentle_outputs: the direct output of Gentle 
+    audio_file: a pydub object storing an audio_file
+    anchor_length: int to determine criteria for anchor Seg
     """
     # variables to help with bounding Segments
     correct_count = 0
@@ -48,14 +54,14 @@ def segmentize(gentle_outputs, audio_file,
 
                 # load the previous unanchored words as a Segment 
                 seg = get_segment(gentle_outputs[end_prev_anchor: \
-                    first_correct_index], rel_audio_start, False, audio_file,
+                    first_correct_index],  False, audio_file,
                     total_gentle_len)	
   
                 segs.append(seg)
 
             # Load the current ancor words as a Segment
             seg = get_segment(gentle_outputs[first_correct_index: \
-                index], rel_audio_start, True, audio_file,
+                index],  True, audio_file,
                 total_gentle_len)
 
             segs.append(seg)
@@ -93,7 +99,7 @@ def segmentize(gentle_outputs, audio_file,
 
                     # get previous unanchored seg
                     seg = get_segment(gentle_outputs[end_prev_anchor: \
-                        first_correct_index], rel_audio_start, False, audio_file,
+                        first_correct_index], False, audio_file,
                         total_gentle_len)	
 
                     # store previous unanchored seg
@@ -101,7 +107,7 @@ def segmentize(gentle_outputs, audio_file,
 
                 # get the anchor segment
                 seg = get_segment(gentle_outputs[first_correct_index:], \
-                    rel_audio_start, True, audio_file, total_gentle_len)
+                     True, audio_file, total_gentle_len)
 
                 # store the anchor seg
                 segs.append(seg)	
@@ -116,25 +122,33 @@ def segmentize(gentle_outputs, audio_file,
 
                 # store the previous unanchored segments as a seg- append
                 seg = get_segment(gentle_outputs[end_prev_anchor:], \
-                rel_audio_start, False, audio_file, total_gentle_len)	
+                 False, audio_file, total_gentle_len)	
                 segs.append(seg)
 
 
     return segs
 
 
-def get_segment (bounded_gentle_output, rel_audio_start, aligned, audio_file, total_gentle_len):
+def get_segment (bounded_gentle_output, is_anchor, audio_file, total_gentle_len):
     """
     Helper function to easily convert a bounded
     portion of gentle output into a Segment
+
+    Parameters
+    --------------
+    bounded_gentle_output: portion of gentle output within Segment   
+    is_anchor - bool: whether segment is an anchor point or not
+    audio_file: pydub object of bounded audio file
+    total_gentle_len: length of gentle_output passed into segmentize
+                      Used to check for improvement in recurse
     """
 
     # relative audio start time plus the audio time of the first/last word
-    audio_start = rel_audio_start + bounded_gentle_output[0].start
-    audio_finish = rel_audio_start + bounded_gentle_output[-1].end
+    audio_start = bounded_gentle_output[0].start
+    audio_finish = bounded_gentle_output[-1].end
 
     seg = Segment(audio_start, audio_finish,
-    			  bounded_gentle_output, aligned, audio_file,
+    			  bounded_gentle_output, is_anchor, audio_file,
     			  total_gentle_len)
 
     return seg
