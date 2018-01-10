@@ -19,7 +19,7 @@ def segmentize (gentle_outputs, audio_file,
     end_prev_anchor = 0
     first_correct_index = None
 
-    #convenience variable 
+    # convenience variable 
     total_gentle_len = len(gentle_outputs)
 
 	# Array to store all segments
@@ -110,7 +110,6 @@ def segmentize (gentle_outputs, audio_file,
 
 
 def get_segment (gentle_output, rel_audio_start, aligned, audio_file, total_gentle_len):
-
 	# relative audio start time plus the audio time of the first/last word
 	audio_start = rel_audio_start + gentle_output[0].start
 	audio_finish = rel_audio_start + gentle_output[-1].end
