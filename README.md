@@ -16,11 +16,42 @@ consecutive correctly aligned words.
 
 <p align="center">
   <img src="pictures/AnchorPoints.png" width="350"/>
+  <br>
+  The larger the N, the more accurate the model will be. The smaller the N, the faster the model will be.
 </p>
 
-The larger the N, the more accurate the model will be. The smaller the N, the faster the model will be.
+
 
 With these anchor points having been located, our wrapper will then run Gentle recursively on each individual non-anchored 
 section of audio. This isolation of dis-aligned clips reduces the number of errors in the transcript or audio 
 by requiring that Segments meet both Gentle's success criteria and Moreno's Anchor criteria, as well as increases
 the number of total aligned words. 
+
+# Installation Process
+
+Dependencies
+
+Requires Python 2
+Pydub- pip install pydub
+Gentle- Instructions available @ https://github.com/lowerquality/gentle
+
+Following Installation of Gentle, you must also add Gentle to your permanent python path, as well as the gentle folder found within gentle:
+
+Linux/Mac 
+
+Open .bashrc file
+  nano /.bashrc
+
+add the following 2 lines to your .bashrc file
+
+  PYTHONPATH=/path/to/gentle/download:${PYTHONPATH}
+  PYTHONPATH=/path/to/gentle/downlaod/gentle:${PYTHONPATH} (both of these folders must be appended)
+
+Update Changes
+  source /.bashrc
+
+# Usage
+
+python2 align.py audio_file_path transcript_text_file_path
+
+
