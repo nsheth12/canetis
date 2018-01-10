@@ -16,19 +16,20 @@ import gentle as gentle
 
 def run_gentle(seg, transcript):
 	"""
-	takes in a segment
+	Takes in a segment
 	1. create new text file containing text
 	2. create new audio with pydub
 	3. run Gentle with these two
 	4. delete text file/audio files
-	"""
-	# I think they are wav files, but not sure
-	audio_cut = seg.audio_file[1000 * seg.start_audio : 1000 * seg.end_audio]
 
-	# print("Audio Len", len(audio_cut))
+	Parameters
+	---------
+	seg : Segment object to align with Gentle
+	transript : string holding the relevant transcript for this segment
+	"""
+	audio_cut = seg.audio_file[1000 * seg.start_audio : 1000 * seg.end_audio]
 	
 	audio_cut.export("temp_audio.wav", format="wav")
-
 
 	# run Gentle
 	resources = gentle.Resources()
@@ -39,17 +40,15 @@ def run_gentle(seg, transcript):
 	# delete cut audio file
 	os.remove("temp_audio.wav")
 	
-	
-	#fix unaligned-word start/end time data
-	fix_unaligned(result, len(audio_cut)/1000)
+	# fix unaligned-word start/end time data
+	fix_unaligned(result, len(audio_cut) / 1000)
 
-	#put gentle timestamps in relation to entire file
+	# put gentle timestamps in relation to entire file
 	for word in result:	
 		word.start += seg.start_audio
 		word.end += seg.start_audio
 
 	return result
-
 
 
 def fix_unaligned (gentle_output, audio_file_length):
@@ -58,8 +57,8 @@ def fix_unaligned (gentle_output, audio_file_length):
 
 	Parameters
 	----------
-	gentle_output: list of Word objects returned by Gentle
-	audio_file: AudioSegment object representing the entire audio file
+	gentle_output : list of Word objects returned by Gentle
+	audio_file : AudioSegment object representing the entire audio file
 	"""
 
 	initialStart = 0
@@ -80,7 +79,6 @@ def fix_unaligned (gentle_output, audio_file_length):
 			
 
 def get_counts(gentle_output):
-
  	words_aligned = 0
 	total_count = 0
 	for word in gentle_output:

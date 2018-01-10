@@ -4,7 +4,6 @@ from utils import run_gentle, get_counts
 from segmentizer import segmentize
 
 
-
 def align(audio_file_path, text_file_path, anchor_length=7):
     """
     Align the given audio file and text file with the given starting anchor
