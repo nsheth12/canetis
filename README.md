@@ -1,8 +1,8 @@
-# sail-forensic-gentle
+# Echo
 
-This is a wrapper on top of the forced alignment library Gentle. On particularly long and/or noisy audio files, 
+Echo is a recursive forced aligner built on Gentle. On particularly long and/or noisy audio files, 
 small errors have the potential to accumulate within forced aligners such as Gentle. In order to
-resolve this issue, our aligner implements the recursive algorithm described by Moreno et al. in the paper [“A Recursive Algorithm for the Forced Alignment of very Long Audio Segments”](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.649.6346&rep=rep1&type=pdf).
+resolve this issue, our aligner implements the recursive algorithm described by Moreno et al. in the paper [“A Recursive Algorithm for the Forced Alignment of Very Long Audio Segments”](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.649.6346&rep=rep1&type=pdf).
 
 This paper proposes the creation of these so-called “anchor points” of consecutively aligned words. A stretch of audio is an anchor point if it contains N number of 
 consecutive correctly aligned words. The aligner then continues to run recursively in the space between these anchor points until no further improvements can be attained.
@@ -24,6 +24,10 @@ the total number of aligned words.
 1. Python 2
 2. Pydub - `pip install pydub`
 3. Gentle - Instructions available @ https://github.com/lowerquality/gentle
+
+**Install**
+
+Download the source code into a directory. The library will be run directly from the source code.
 
 **Configuration**
 
