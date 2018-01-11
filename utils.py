@@ -1,16 +1,7 @@
 import os
 from segment import Segment
 from pydub import AudioSegment
-
 import sys
-#add path to gentle directory and gentle code directory
-sys.path.append("/Users/nihar/Nihar/SAIL/gentle")
-sys.path.append("/Users/nihar/Nihar/SAIL/gentle/gentle")
-sys.path.append("/home/kian/ML/SAIL/sail-forensic-gentle/gentle")
-sys.path.append("/home/kian/ML/SAIL/sail-forensic-gentle/gentle/gentle")
-sys.path.insert(0,"/home/coder/Desktop/alignment_nihar_kian/gentle")
-sys.path.insert(0, "/home/coder/Desktop/alignment_nihar_kian/gentle/gentle")
-
 import gentle as gentle
 
 
