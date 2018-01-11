@@ -1,6 +1,6 @@
 from pydub import AudioSegment
 from segment import Segment
-from utils import run_gentle, get_counts
+from utils import run_gentle
 from segmentizer import segmentize
 import sys
 
@@ -79,9 +79,9 @@ def recurse(gentle_output, audio_file, anchor_length):
 if len(sys.argv) < 3:
     print("Invalid command line arguments.")
 else:
-    result = align(sys.argv[1], sys.argv[2])
+    output = align(sys.argv[1], sys.argv[2])
 
-    for seg in result:
+    for seg in output:
         words = seg.gentle
         for word in words:
             print_str = "'" + word.word + "'"
