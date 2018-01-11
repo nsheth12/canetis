@@ -34,11 +34,7 @@ the number of total aligned words.
 2. Pydub - `pip install pydub`
 3. Gentle - Instructions available @ https://github.com/lowerquality/gentle. 
 
-Following installation of Gentle, you must also add Gentle to your permanent Python path, and you must add the `gentle` directory within the Gentle installation to the path:
-
-**Linux/Mac**
-
-Add the following 2 lines to your `.bashrc` file
+Following installation of Gentle, you must also add Gentle to your permanent Python path, and you must add the `gentle` directory within the Gentle installation to the path. To do this, add the following 2 lines to your `.bashrc` file
 
 ```bash
 export PYTHONPATH=/path/to/gentle/download:${PYTHONPATH}
