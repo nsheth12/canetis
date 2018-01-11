@@ -32,8 +32,6 @@ def align(audio_file_path, text_file_path, anchor_length=7):
     audio_segment = Segment(0, len(audio_file), [], True, audio_file, None)
     gentle_output = run_gentle(audio_segment, transcript)
 
-    get_counts(gentle_output)
-
     # run Moreno's recursive algorithm on initial gentle output
     result = recurse(gentle_output, audio_file, anchor_length=anchor_length)
 

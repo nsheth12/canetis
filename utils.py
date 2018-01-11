@@ -67,15 +67,3 @@ def fix_unaligned (gentle_output, audio_file_length):
 			word.end = initialEnd
 		else:
 			initialEnd = word.start
-			
-
-def get_counts(gentle_output):
- 	words_aligned = 0
-	total_count = 0
-	for word in gentle_output:
-		if word.success():
-			words_aligned+=1
-		total_count+=1
-
-	print("Gentle's words aligned:", words_aligned)
-	print("Gentle's Total Count:", total_count)
