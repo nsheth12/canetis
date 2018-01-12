@@ -1,6 +1,6 @@
-# Echo
+# Canetis
 
-Echo is a recursive forced aligner built on Gentle. On particularly long and/or noisy audio files, 
+Canetis is a recursive forced aligner built on Gentle. On particularly long and/or noisy audio files, 
 small errors have the potential to accumulate within forced aligners such as Gentle. In order to
 resolve this issue, our aligner implements the recursive algorithm described by Moreno et al. in the paper [“A Recursive Algorithm for the Forced Alignment of Very Long Audio Segments”](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.649.6346&rep=rep1&type=pdf).
 
@@ -48,3 +48,6 @@ python2 align.py audio.wav transcript.txt
 
 Prints out each word in the transcript, whether each word is aligned or unaligned and the start time and end time of each aligned word.
 
+## Contributors
+
+This project was created by [Nihar Sheth](http://github.com/nsheth12) and [Kian Ghodoussi](http://github.com/ghodouss).
