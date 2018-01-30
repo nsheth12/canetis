@@ -1,9 +1,9 @@
 from pydub import AudioSegment
 from segment import Segment
-from utils import run_gentle, print_results
+from utils import run_gentle
 from segmentizer import segmentize
 import sys
-
+import json
 
 
 def align(audio_file_path, text_file_path, anchor_length=7):
@@ -36,8 +36,14 @@ def align(audio_file_path, text_file_path, anchor_length=7):
     # run Moreno's recursive algorithm on initial gentle output
     result = recurse(gentle_output, audio_file, anchor_length=anchor_length)
 
+    ordered_dicts = []
+    for seg in result:
+        for word in seg.gentle:
+            ordered_dicts.append({"word": word.word, "success": word.success(),
+                                  "end": word.end, "start": word.start})
+
     # return result of Moreno's algorithm
-    return result
+    return ordered_dicts
 
 
 def recurse(gentle_output, audio_file, anchor_length):
@@ -79,8 +85,9 @@ def recurse(gentle_output, audio_file, anchor_length):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 3:
+    if len(sys.argv) < 4:
         print("Invalid command line arguments.")
     else:
         output = align(sys.argv[1], sys.argv[2])
-        print_results(output)
+        with open(sys.argv[3], "w") as output_file:
+            output_file.write(json.dumps(output))
