@@ -35,7 +35,7 @@ Following installation of Gentle, you must also add Gentle to your permanent Pyt
 
 ```bash
 export PYTHONPATH=/path/to/gentle/download:${PYTHONPATH}
-export PYTHONPATH=/path/to/gentle/downlaod/gentle:${PYTHONPATH}
+export PYTHONPATH=/path/to/gentle/download/gentle:${PYTHONPATH}
 ```
 
 Then go ahead and open another terminal window or run `source ~/.bashrc` to activative the changes within the current terminal window.

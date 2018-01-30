@@ -1,12 +1,13 @@
 from pydub import AudioSegment
 from segment import Segment
-from utils import run_gentle
+from utils import run_gentle, print_results
 from segmentizer import segmentize
 import sys
 
 
+
 def align(audio_file_path, text_file_path, anchor_length=7):
-    """
+    """"
     Align the given audio file and text file with the given starting anchor
     length (N, in Moreno's Algorithm).
 
@@ -76,17 +77,10 @@ def recurse(gentle_output, audio_file, anchor_length):
 
     return res
 
-if len(sys.argv) < 3:
-    print("Invalid command line arguments.")
-else:
-    output = align(sys.argv[1], sys.argv[2])
 
-    for seg in output:
-        words = seg.gentle
-        for word in words:
-            print_str = "'" + word.word + "'"
-            print_str += " aligned" if word.success() else " not aligned"
-            if word.success():
-                print_str += " starts at " + str(word.start)
-                print_str += " ends at " + str(word.end)
-            print(print_str)
+if __name__ == "__main__":
+    if len(sys.argv) < 3:
+        print("Invalid command line arguments.")
+    else:
+        output = align(sys.argv[1], sys.argv[2])
+        print_results(output)

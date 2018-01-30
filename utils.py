@@ -64,3 +64,34 @@ def fix_unaligned(gentle_output, audio_file_length):
             word.end = initial_end
         else:
             initial_end = word.start
+
+
+
+def print_results(result):
+    """
+    Helper function that prints
+    the results of align. 
+
+    Parameters
+    -----------------------
+    List of segment Objects
+    
+    Outputs
+    ------------------
+    Prints each word, its start
+    time, end time and whether it has 
+    been aligned or not
+    """
+
+    for seg in result:
+        words = seg.gentle
+        print("Format: (Word, Start-Time, End-Time, Aligned-Unaligned)")
+        for word in words:
+            print_str = "('" + word.word + "',"
+            print_str += " aligned, " if word.success() else " not aligned, "
+            if word.success():
+                print_str +=  str(word.start)
+                print_str += ", " + str(word.end) + ")"
+            print(print_str)
+
+        print("Format: (Word, Aligned/Unaligned, Start-Time, End-Time)")
