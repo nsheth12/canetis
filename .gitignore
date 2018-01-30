@@ -1,6 +1,6 @@
-csvs/*
-test/*
-
+csvs/
+test/
+.idea/
 
 # Created by https://www.gitignore.io/api/python
 
