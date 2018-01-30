@@ -43,7 +43,7 @@ Then go ahead and open another terminal window or run `source ~/.bashrc` to acti
 ## Usage
 
 ```bash
-python2 align.py audio.wav transcript.txt
+python2 align.py audio.wav transcript.txt output.txt
 ```
 
 Prints out each word in the transcript, whether each word is aligned or unaligned and the start time and end time of each aligned word.
