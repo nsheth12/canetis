@@ -42,11 +42,25 @@ Then go ahead and open another terminal window or run `source ~/.bashrc` to acti
 
 ## Usage
 
+### Command Line Usage 
+
 ```bash
 python2 align.py audio.wav transcript.txt output.txt
 ```
 
-Prints out each word in the transcript, whether each word is aligned or unaligned and the start time and end time of each aligned word.
+Uploads a JSONified dictionary into the output.txt file, containing the following keys:
+  "start" - the start audio time
+  "end" - the end audio time
+  "word" - the word
+  "success" - whether the word was successfully aligned or not
+ 
+ ### Modular Usage
+ 
+To use the aligner within a python file, simply import align
+      'from canetis.align import align'
+The align function takes an audio file path and a text file path as parameters, and returns the dictionary described above.
+        align("path/to/audio/file", "path/to/test/file")
+      
 
 ## Contributors
 
