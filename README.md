@@ -57,7 +57,9 @@ Uploads a JSONified dictionary into the output.txt file, containing the followin
  ### Modular Usage
  
 To use the aligner within a python file, simply import align
-      'from canetis.align import align'
+
+      from canetis.align import align
+      
 The align function takes an audio file path and a text file path as parameters, and returns the dictionary described above.
         align("path/to/audio/file", "path/to/test/file")
       
