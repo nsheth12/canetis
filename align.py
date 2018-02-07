@@ -1,6 +1,6 @@
 from pydub import AudioSegment
 from segment import Segment
-from utils import run_gentle
+from utils import run_gentle, get_anchor_length
 from segmentizer import segmentize
 import sys
 import json
@@ -8,7 +8,7 @@ import json
 
     
 
-def align(audio_file_path, text_file_path, anchor_length=40):
+def align(audio_file_path, text_file_path):
     """"
     Align the given audio file and text file with the given starting anchor
     length (N, in Moreno's Algorithm).
@@ -34,6 +34,8 @@ def align(audio_file_path, text_file_path, anchor_length=40):
     # store audio as a seg and run gentle
     audio_segment = Segment(0, len(audio_file), [], True, audio_file, None)
     gentle_output = run_gentle(audio_segment, transcript)
+
+    anchor_length = get_anchor_length(gentle_output)
 
     # run Moreno's recursive algorithm on initial gentle output
     result = recurse(gentle_output, audio_file, anchor_length=anchor_length)
