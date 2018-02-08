@@ -6,8 +6,6 @@ import sys
 import json
 
 
-    
-
 def align(audio_file_path, text_file_path, anchor_length=40):
     """"
     Align the given audio file and text file with the given starting anchor
@@ -81,7 +79,7 @@ def recurse(gentle_output, audio_file, anchor_length):
         else:
             # else add run recursion through recurse(Gentle(segment))
             res.extend(recurse(run_gentle(seg, seg.get_text()),
-                               audio_file, anchor_length=max(anchor_length**.85,4)))
+                               audio_file, anchor_length=max(anchor_length**.85, 4)))
 
     return res
 
