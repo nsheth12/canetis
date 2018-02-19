@@ -26,6 +26,6 @@ fi
 pip install pydub
 git clone https://github.com/lowerquality/gentle.git
 rm -rf gentle/.git
-gentle/install.sh
+(cd gentle && ./install.sh)
 echo "export PYTHONPATH=gentle:${PYTHONPATH}" >> ~/.bashrc
 echo "export PYTHONPATH=gentle/gentle:${PYTHONPATH}" >> ~/.bashrc
