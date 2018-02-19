@@ -64,36 +64,3 @@ def fix_unaligned(gentle_output, audio_file_length):
             word.end = initial_end
         else:
             initial_end = word.start
-
-
-
-
-def get_anchor_length(gentle_output):
-
-    """
-    Helper Function that automatically choose canetis'
-    anchor length based on the gentle output error rate.
-    The greater the error rate, the greater the anchor length
-
-    Inputs
-    ----------------------
-    gentle_output: list of gentle Word Objects
-
-    Outputs
-    -------------------
-    An int that should be used to select the anchor lenggth
-    """
-    incorrect_count = 0
-    total_count = 0
-
-    for word in gentle_output:
-        if not word.success():
-            incorrect_count+=1
-        total_count+=1
-    # get accuracy
-    accuracy = 100*incorrect_count/total_count
-
-    # prevent disporportionate anchor_lengths
-    anchor_length = min(accuracy, len(gentle_output)/10)
-
-    return anchor_length

@@ -27,3 +27,30 @@ class Segment(object):
         words = [word.word for word in self.gentle]
         text = " ".join(words)
         return text
+
+    def get_anchor_length(self):
+
+        """
+        Helper Function that automatically choose canetis'
+        anchor length based on the gentle output error rate.
+        The greater the error rate, the greater the anchor length
+
+        Outputs
+        -------------------
+        An int that should be used to select the anchor length
+        """
+        incorrect_count = 0
+        total_count = 0
+
+        for word in self.gentle:
+            if not word.success():
+                incorrect_count+=1
+            total_count+=1
+
+        # get accuracy
+        accuracy = float(incorrect_count)/float(total_count)
+
+        # prevent disporportionate anchor_lengths
+        anchor_length = max(accuracy*len(self.gentle), 4)
+
+        return anchor_length

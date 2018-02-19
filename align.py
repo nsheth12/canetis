@@ -1,6 +1,6 @@
 from pydub import AudioSegment
 from segment import Segment
-from utils import run_gentle, get_anchor_length
+from utils import run_gentle
 from segmentizer import segmentize
 import sys
 import json
@@ -35,10 +35,9 @@ def align(audio_file_path, text_file_path):
     audio_segment = Segment(0, len(audio_file), [], True, audio_file, None)
     gentle_output = run_gentle(audio_segment, transcript)
 
-    anchor_length = get_anchor_length(gentle_output)
 
     # run Moreno's recursive algorithm on initial gentle output
-    result = recurse(gentle_output, audio_file, anchor_length=anchor_length)
+    result = recurse(gentle_output, audio_file)
 
     ordered_dicts = []
     for seg in result:
@@ -50,7 +49,7 @@ def align(audio_file_path, text_file_path):
     return ordered_dicts
 
 
-def recurse(gentle_output, audio_file, anchor_length):
+def recurse(gentle_output, audio_file, anchor_length=30):
     """
     Recursively align the unaligned segments of a given Gentle output.
 
@@ -83,7 +82,7 @@ def recurse(gentle_output, audio_file, anchor_length):
         else:
             # else add run recursion through recurse(Gentle(segment))
             res.extend(recurse(run_gentle(seg, seg.get_text()),
-                               audio_file, anchor_length=max(anchor_length**.85,4)))
+                               audio_file, anchor_length=seg.get_anchor_length()))
 
     return res
 
