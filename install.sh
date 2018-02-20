@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# set -e
+set -e
 
 if ! command -v python > /dev/null; then
     echo "Please install Python 2 and then run this script... exiting"
@@ -24,8 +24,8 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 pip install pydub
+rm -rf .git
 git clone https://github.com/lowerquality/gentle.git
-rm -rf gentle/.git
 (cd gentle && ./install.sh)
 echo "export PYTHONPATH=gentle:${PYTHONPATH}" >> ~/.bashrc
 echo "export PYTHONPATH=gentle/gentle:${PYTHONPATH}" >> ~/.bashrc
