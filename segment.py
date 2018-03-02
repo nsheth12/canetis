@@ -40,18 +40,7 @@ class Segment(object):
         An int that should be used to select the anchor length
         """
 
-        correct_count = 0
-        total_count = 0
-
-        for word in self.gentle:
-            if word.success():
-                correct_count+=1
-            total_count+=1
-
-        # get accuracy
-        accuracy = float(correct_count)/float(total_count)
-
         # prevent disporportionate anchor_lengths
-        anchor_length = int(max(accuracy*len(self.gentle), 4))
+        anchor_length = int(max(len(self.gentle)//8, 4))
 
         return anchor_length
