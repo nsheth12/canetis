@@ -49,7 +49,7 @@ class Segment(object):
             total_count+=1
 
         # get accuracy
-        accuracy = float(incorrect_count)/float(total_count)
+        accuracy = int(float(incorrect_count)/float(total_count))
 
         # prevent disporportionate anchor_lengths
         anchor_length = max(accuracy*len(self.gentle), 4)
