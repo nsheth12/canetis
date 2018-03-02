@@ -39,6 +39,7 @@ class Segment(object):
         -------------------
         An int that should be used to select the anchor length
         """
+        
         incorrect_count = 0
         total_count = 0
 
