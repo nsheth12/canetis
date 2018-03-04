@@ -4,13 +4,14 @@ import os
 import json
 
 
-def process_file(basename):
+def process_output(basename):
+    """Process Canetis and Gentle outputs for given file for concise output"""
     successful_words_canetis = 0
     total_words_canetis = 0
     successful_words_gentle = 0
     total_words_gentle = 0
 
-    # canetis part
+    # Canetis part
     with open(os.path.join("canetis_results", basename)) as canetis_file:
         canetis_output = json.load(canetis_file)
 
@@ -19,7 +20,7 @@ def process_file(basename):
                 successful_words_canetis += 1
             total_words_canetis += 1
 
-    # gentle part
+    # Gentle part
     with open(os.path.join("gentle_results", basename)) as gentle_file:
         gentle_output = json.load(gentle_file)
 
@@ -27,8 +28,6 @@ def process_file(basename):
             if word["success"]:
                 successful_words_gentle += 1
             total_words_gentle += 1
-        # successful_words_gentle = int(gentle_file.readline().strip())
-        # total_words_gentle = int(gentle_file.readline().strip())
 
     print "Gentle successful:", successful_words_gentle
     print "Canetis successful:", successful_words_canetis
@@ -58,6 +57,7 @@ for audio_name in os.listdir("audio"):
         aligner = gentle.ForcedAligner(resources, transcript_text)
         result = aligner.transcribe(wavfile).words
 
+    # write Gentle output to gentle_results directory
     with open(os.path.join("gentle_results", transcript_name + ".txt"), "w") as f:
         output = []
         for word in result:
@@ -69,7 +69,9 @@ for audio_name in os.listdir("audio"):
     print("About to run Canetis on " + transcript_name)
     canetis_output = align(audio_path, transcript_path)
 
+    # write Canetis output to canetis_results directory
     with open(os.path.join("canetis_results", transcript_name + ".txt"), "w") as f:
         json.dump(canetis_output, f)
 
-    process_file(transcript_name + ".txt")
+    # process and print outputs
+    process_output(transcript_name + ".txt")
