@@ -1,7 +1,9 @@
 import gentle
-from align import align
+import sys
 import os
 import json
+sys.path.append(os.getcwd()+"../")
+from align import align
 
 
 def process_output(basename):
