@@ -12,15 +12,9 @@ if ! command -v pip > /dev/null; then
     exit 1
 fi
 
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
-    apt-get install git
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-    if command -v brew > /dev/null; then
-        brew install git
-    else
-        echo >&2 "Please install homebrew and then run this install script... exiting"
-        exit 1
-    fi
+if ! command -v git > /dev/null; then
+    echo "Please install git and then run this script... exiting"
+    exit 1
 fi
 
 pip install pydub
