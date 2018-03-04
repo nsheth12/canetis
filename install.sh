@@ -17,10 +17,10 @@ if ! command -v git > /dev/null; then
     exit 1
 fi
 
-# pip install pydub
-# rm -rf .git
-# git clone https://github.com/lowerquality/gentle.git
-# (cd gentle && ./install.sh)
+pip install pydub
+rm -rf .git
+git clone https://github.com/lowerquality/gentle.git
+(cd gentle && ./install.sh)
 
 # taken from https://stackoverflow.com/a/246128
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
