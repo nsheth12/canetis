@@ -1,8 +1,6 @@
 import gentle
-import sys
 import os
 import json
-sys.path.append(os.getcwd()+"../")
 from align import align
 
 

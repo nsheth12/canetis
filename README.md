@@ -31,14 +31,15 @@ Download the source code into a directory. The library will be run directly from
 
 **Configuration**
 
-Following installation of Gentle, you must also add Gentle to your permanent Python path, and you must add the `gentle` directory within the Gentle installation to the path. To do this, add the following 2 lines to your `.bashrc` file:
+Following installation of Gentle, you must also add Gentle to your permanent Python path, and you must add the `gentle` directory within the Gentle installation to the path. To do this, add the following 3 lines to your `.bashrc` or `.zshrc` file:
 
 ```bash
 export PYTHONPATH=/path/to/gentle/download:${PYTHONPATH}
 export PYTHONPATH=/path/to/gentle/download/gentle:${PYTHONPATH}
+export PYTHONPATH=/path/to/canetis:${PYTHONPATH}
 ```
 
-Then go ahead and open another terminal window or run `source ~/.bashrc` to activative the changes within the current terminal window.
+Then go ahead and open another terminal window or run `source ~/.bashrc` or `source ~/.zshrc` to activate the changes within the current terminal window.
 
 ## Usage
 
@@ -53,21 +54,6 @@ Puts a JSONified dictionary into the output.txt file, containing the following k
 2. "end" - the end audio time
 3. "word" - the word
 4. "success" - whether the word was successfully aligned or not
- 
- ### Modular Usage
- 
-To use the aligner within a python file, simply import align
-
-```python
-from canetis.align import align
-```
-      
-The align function takes an audio file path and a text file path as parameters, and returns the dictionary described above.
-
-```python      
-align("path_/to_/audio_/file", "path_/to_/test_/file")
-```
-      
 
 ## Contributors
 
