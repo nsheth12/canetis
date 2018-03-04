@@ -7,4 +7,4 @@ install:
   - source ~/.profile
   - pip install pydub # this installs inside virtualenv
 script:
-  - python test/test.py
+  - travis_wait 40 python test/test.py
