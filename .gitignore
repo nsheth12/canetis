@@ -1,6 +1,6 @@
 csvs/
-test/
 .idea/
+clean_transcript.py
 
 # Created by https://www.gitignore.io/api/python
 
