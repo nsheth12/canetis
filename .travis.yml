@@ -3,7 +3,7 @@ language: python
 python:
   - "2.7"
 install:
-  - ./install.sh
+  - sudo ./install.sh
   - source ~/.profile
   - pip install pydub # this installs inside virtualenv
 script:
