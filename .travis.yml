@@ -1,0 +1,10 @@
+sudo: required
+language: python
+python:
+  - "2.7"
+install:
+  - sudo ./install.sh
+  - source ~/.profile
+  - pip install pydub # this installs inside virtualenv
+script:
+  - python test/test.py
