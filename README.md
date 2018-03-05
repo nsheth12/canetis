@@ -22,31 +22,22 @@ the total number of aligned words.
 **Dependencies**
 
 1. Python 2
-2. Pydub - `pip install pydub`
-3. Gentle - Instructions available @ https://github.com/lowerquality/gentle
+2. Pip
 
 **Install**
 
-Download the source code into a directory. The library will be run directly from the source code.
-
-**Configuration**
-
-Following installation of Gentle, you must also add Gentle to your permanent Python path, and you must add the `gentle` directory within the Gentle installation to the path. To do this, add the following 3 lines to your `.bashrc` or `.zshrc` file:
-
+Clone the source onto your machine. `cd` into the `canetis` directory and run the following:
 ```bash
-export PYTHONPATH=/path/to/gentle/download:${PYTHONPATH}
-export PYTHONPATH=/path/to/gentle/download/gentle:${PYTHONPATH}
-export PYTHONPATH=/path/to/canetis:${PYTHONPATH}
+sudo ./install.sh
+source ~/.profile
 ```
 
-Then go ahead and open another terminal window or run `source ~/.bashrc` or `source ~/.zshrc` to activate the changes within the current terminal window.
+This will install all required dependencies, install Canetis, and perform required configuration.
 
 ## Usage
 
-### Command Line Usage 
-
 ```bash
-python align.py audio.wav transcript.txt output.txt
+python2 align.py audio.wav transcript.txt output.txt
 ```
 
 Puts a JSONified dictionary into the output.txt file, containing the following keys:
