@@ -3,8 +3,7 @@ matrix:
   include:
     - os: osx
       language: generic # OS X comes with Python 2 installed
-    - language: python
-      python: "2.7"
+      before_install: sudo easy_install pip
 install:
   - sudo ./install.sh
   - source ~/.profile
