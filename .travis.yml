@@ -2,9 +2,7 @@ sudo: required
 matrix:
   include:
     - os: osx
-      language: generic
-      before_install:
-        - brew install python
+      language: generic # OS X comes with Python 2 installed
     - language: python
       python: "2.7"
 install:
