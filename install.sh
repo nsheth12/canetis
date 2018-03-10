@@ -17,7 +17,7 @@ if ! command -v git > /dev/null; then
     exit 1
 fi
 
-pip install pydub
+sudo pip install pydub
 rm -rf .git
 git clone https://github.com/lowerquality/gentle.git
 (cd gentle && sudo ./install.sh)
