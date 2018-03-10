@@ -20,13 +20,13 @@ fi
 pip install pydub
 rm -rf .git
 git clone https://github.com/lowerquality/gentle.git
-(cd gentle && ./install.sh)
+(cd gentle && sudo ./install.sh)
 
 # deal with Ubuntu 14.04 ffmpeg issues
 if ! command -v ffmpeg > /dev/null && [[ "$OSTYPE" == "linux-gnu" ]]; then
-    add-apt-repository -y ppa:mc3man/trusty-media
-    apt-get -y update
-    apt-get -y install ffmpeg
+    sudo add-apt-repository -y ppa:mc3man/trusty-media
+    sudo apt-get -y update
+    sudo apt-get -y install ffmpeg
 fi
 
 # taken from https://stackoverflow.com/a/246128

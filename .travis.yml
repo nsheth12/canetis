@@ -5,7 +5,7 @@ matrix:
       language: generic # OS X comes with Python 2 installed
       before_install: sudo easy_install pip
 install:
-  - sudo ./install.sh
+  - ./install.sh
   - source ~/.profile
   - pip install pydub # this installs inside virtualenv
 script:
