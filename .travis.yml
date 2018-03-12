@@ -4,4 +4,4 @@ services:
   - docker
 
 script:
-  - docker run -v `pwd`:`pwd` nsheth12/canetis-base
+  - docker run -v "$(pwd)":/canetis nsheth12/canetis-base
