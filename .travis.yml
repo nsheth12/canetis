@@ -3,5 +3,14 @@ sudo: required
 services:
   - docker
 
+matrix:
+  include:
+  - install:
+    - wget -P test/audio http://www.linguistics.ucsb.edu/corpusmedia/SBC018.wav
+    - wget -P test/transcripts http://www.linguistics.ucsb.edu/sites/secure.lsit.ucsb.edu.ling.d7/files/sitefiles/research/SBC/SBC018.trn
+  - install:
+    - wget -P test/audio http://www.linguistics.ucsb.edu/corpusmedia/SBC010.wav
+    - wget -P test/transcripts http://www.linguistics.ucsb.edu/sites/secure.lsit.ucsb.edu.ling.d7/files/sitefiles/research/SBC/SBC010.trn
+
 script:
   - travis_wait 45 docker run -v "$(pwd)":/canetis nsheth12/canetis-base python -u test/test.py
