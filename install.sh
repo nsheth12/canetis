@@ -22,11 +22,9 @@ rm -rf .git
 git clone https://github.com/lowerquality/gentle.git
 (cd gentle && ./install.sh)
 
-# deal with Ubuntu 14.04 ffmpeg issues
-if ! command -v ffmpeg > /dev/null && [[ "$OSTYPE" == "linux-gnu" ]]; then
-    add-apt-repository -y ppa:mc3man/trusty-media
-    apt-get -y update
-    apt-get -y install ffmpeg
+if ! command -v ffmpeg > /dev/null; then
+    echo "Please install ffmpeg and then run this script... exiting"
+    exit 1
 fi
 
 # taken from https://stackoverflow.com/a/246128

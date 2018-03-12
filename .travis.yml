@@ -1,10 +1,7 @@
 sudo: required
-language: python
-python:
-  - "2.7"
-install:
-  - sudo ./install.sh
-  - source ~/.profile
-  - pip install pydub # this installs inside virtualenv
+
+services:
+  - docker
+
 script:
-  - python test/test.py
+  - docker run -v `pwd`:`pwd` nsheth12/canetis-base
