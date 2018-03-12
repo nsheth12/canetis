@@ -4,4 +4,4 @@ services:
   - docker
 
 script:
-  - docker run -v "$(pwd)":/canetis nsheth12/canetis-base python -u test/test.py
+  - travis_wait 45 docker run -v "$(pwd)":/canetis nsheth12/canetis-base python -u test/test.py
