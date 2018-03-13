@@ -19,4 +19,4 @@ matrix:
     - find test/transcripts -type f ! -iname "lucier.trn" -delete
 
 script:
-  - travis_wait 45 docker run -v "$(pwd)":/canetis nsheth12/canetis-base python -u test/test.py
+  - travis_wait 50 docker run -v "$(pwd)":/canetis nsheth12/canetis-base python -u test/test.py
