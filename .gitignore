@@ -1,6 +1,9 @@
 csvs/
 .idea/
 clean_transcript.py
+Dockerfile
+.dockerignore
+temp_test/
 
 # Created by https://www.gitignore.io/api/python
 

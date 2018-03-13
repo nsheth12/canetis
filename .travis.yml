@@ -6,14 +6,14 @@ services:
 matrix:
   include:
   - install:
-    - find test/audio -type f ! -iname "SBC018.wav" -delete
-    - find test/transcripts -type f ! -iname "SBC018.trn" -delete
+    - find test/audio -type f ! -iname "SBC018.wav" ! -iname "lucier.mp3" -delete
+    - find test/transcripts -type f ! -iname "SBC018.trn" ! -iname "lucier.trn" -delete
   - install:
-    - find test/audio -type f ! -iname "SBC010.wav" -delete
-    - find test/transcripts -type f ! -iname "SBC010.trn" -delete
+    - find test/audio -type f ! -iname "SBC010.wav" ! -iname "lucier.mp3" -delete
+    - find test/transcripts -type f ! -iname "SBC010.trn" ! -iname "lucier.trn" -delete
   - install:
-    - find test/audio -type f ! -iname "SBC022.wav" -delete
-    - find test/transcripts -type f ! -iname "SBC022.trn" -delete
+    - find test/audio -type f ! -iname "SBC022.wav" ! -iname "lucier.mp3" -delete
+    - find test/transcripts -type f ! -iname "SBC022.trn" ! -iname "lucier.trn" -delete
   - install:
     - find test/audio -type f ! -iname "lucier.mp3" -delete
     - find test/transcripts -type f ! -iname "lucier.trn" -delete
