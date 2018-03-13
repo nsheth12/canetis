@@ -6,11 +6,17 @@ services:
 matrix:
   include:
   - install:
-    - wget -P test/audio http://www.linguistics.ucsb.edu/corpusmedia/SBC018.wav
-    - wget -P test/transcripts http://www.linguistics.ucsb.edu/sites/secure.lsit.ucsb.edu.ling.d7/files/sitefiles/research/SBC/SBC018.trn
+    - find test/audio -type f ! -iname "SBC018.wav" -delete
+    - find test/transcripts -type f ! -iname "SBC018.trn" -delete
   - install:
-    - wget -P test/audio http://www.linguistics.ucsb.edu/corpusmedia/SBC010.wav
-    - wget -P test/transcripts http://www.linguistics.ucsb.edu/sites/secure.lsit.ucsb.edu.ling.d7/files/sitefiles/research/SBC/SBC010.trn
+    - find test/audio -type f ! -iname "SBC010.wav" -delete
+    - find test/transcripts -type f ! -iname "SBC010.trn" -delete
+  - install:
+    - find test/audio -type f ! -iname "SBC022.wav" -delete
+    - find test/transcripts -type f ! -iname "SBC022.trn" -delete
+  - install:
+    - find test/audio -type f ! -iname "lucier.mp3" -delete
+    - find test/transcripts -type f ! -iname "lucier.trn" -delete
 
 script:
   - travis_wait 45 docker run -v "$(pwd)":/canetis nsheth12/canetis-base python -u test/test.py
