@@ -12,6 +12,20 @@ env:
   - FILE=SBC010 MODE=canetis
   - FILE=SBC022 MODE=gentle
   - FILE=SBC022 MODE=canetis
+  - FILE=SBC027 MODE=gentle
+  - FILE=SBC027 MODE=canetis
+  - FILE=SBC033 MODE=gentle
+  - FILE=SBC033 MODE=canetis
+  - FILE=SBC040 MODE=gentle
+  - FILE=SBC040 MODE=canetis
+  - FILE=SBC046 MODE=gentle
+  - FILE=SBC046 MODE=canetis
+  - FILE=SBC047 MODE=gentle
+  - FILE=SBC047 MODE=canetis
+  - FILE=SBC048 MODE=gentle
+  - FILE=SBC048 MODE=canetis
+  - FILE=SBC050 MODE=gentle
+  - FILE=SBC050 MODE=canetis
 
 install:
   - find test/audio -type f ! -iname "$FILE*" -delete && find test/transcripts -type f ! -iname "$FILE*" -delete
