@@ -3,40 +3,18 @@ sudo: required
 services:
   - docker
 
-matrix:
-  include:
-  - install:
-    - find test/audio -type f ! -iname "lucier.mp3" -delete
-    - find test/transcripts -type f ! -iname "lucier.trn" -delete
-    env: MODE=gentle
-  - install:
-    - find test/audio -type f ! -iname "lucier.mp3" -delete
-    - find test/transcripts -type f ! -iname "lucier.trn" -delete
-    env: MODE=canetis
-  - install:
-    - find test/audio -type f ! -iname "SBC018.wav" -delete
-    - find test/transcripts -type f ! -iname "SBC018.trn" -delete
-    env: MODE=gentle
-  - install:
-    - find test/audio -type f ! -iname "SBC018.wav" -delete
-    - find test/transcripts -type f ! -iname "SBC018.trn" -delete
-    env: MODE=canetis
-  - install:
-    - find test/audio -type f ! -iname "SBC010.wav" -delete
-    - find test/transcripts -type f ! -iname "SBC010.trn" -delete
-    env: MODE=gentle
-  - install:
-    - find test/audio -type f ! -iname "SBC010.wav" -delete
-    - find test/transcripts -type f ! -iname "SBC010.trn" -delete
-    env: MODE=canetis
-  - install:
-    - find test/audio -type f ! -iname "SBC022.wav" -delete
-    - find test/transcripts -type f ! -iname "SBC022.trn" -delete
-    env: MODE=gentle
-  - install:
-    - find test/audio -type f ! -iname "SBC022.wav" -delete
-    - find test/transcripts -type f ! -iname "SBC022.trn" -delete
-    env: MODE=canetis
+env:
+  - FILE=lucier MODE=gentle
+  - FILE=lucier MODE=canetis
+  - FILE=SBC018 MODE=gentle
+  - FILE=SBC018 MODE=canetis
+  - FILE=SBC010 MODE=gentle
+  - FILE=SBC010 MODE=canetis
+  - FILE=SBC022 MODE=gentle
+  - FILE=SBC022 MODE=canetis
+
+install:
+  - find test/audio -type f ! -iname "$FILE*" -delete && find test/transcripts -type f ! -iname "$FILE*" -delete
 
 script:
   - travis_wait 50 docker run -e MODE -v "$(pwd)":/canetis nsheth12/canetis-base python -u test/test.py
