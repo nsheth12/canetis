@@ -28,7 +28,8 @@ env:
   - FILE=SBC050 MODE=canetis
 
 install:
+  - docker pull nsheth12/canetis-base
   - find test/audio -type f ! -iname "$FILE*" -delete && find test/transcripts -type f ! -iname "$FILE*" -delete
 
 script:
-  - travis_wait 50 docker run -e MODE -v "$(pwd)":/canetis nsheth12/canetis-base python -u test/test.py
+  - travis_wait 50 docker run -e MODE -v "$(pwd)":/canetis nsheth12/canetis-base time python -u test/test.py
