@@ -2,7 +2,7 @@
 
 set -e
 
-if ! command -v python > /dev/null; then
+if ! command -v python && ! command -v python2 > /dev/null; then
     echo "Please install Python 2 and then run this script... exiting"
     exit 1
 fi
