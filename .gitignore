@@ -13,9 +13,9 @@ __pycache__/
 # C extensions
 *.so
 
-# Kian's stuff
-gentle/
+# Gentle
 gentle-venv/
+gentle_backup_install
 
 # Visual Studio
 .vscode/
