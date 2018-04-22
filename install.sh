@@ -30,7 +30,6 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
 		libtool subversion libatlas3-base python-pip \
 		python-dev wget unzip
 	sudo apt-get install -y ffmpeg || echo -n  "\n\nYou have to install ffmpeg from a PPA or from https://ffmpeg.org before you can run gentle\n\n"
-	(cd gentle && pip install .)
 elif [[ "$OSTYPE" == "darwin"* ]]; then
 	brew list ffmpeg || brew install ffmpeg
 	brew list libtool || brew install libtool
@@ -38,8 +37,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 	brew list autoconf || brew install autoconf
 	brew list wget || brew install wget
 
-	sudo easy_install pip
-	(cd gentle && pip install .)
+	# sudo easy_install pip
 fi
 ###################################
 
@@ -49,7 +47,9 @@ fi
 # load models
 (cd gentle && sudo ./install_models.sh && cd ext && sudo make depend && sudo make)
 
-pip install pydub
+# install Python requirements
+pip install pydub || pip2 install pydub
+(cd gentle && pip install . || pip2 install .)
 
 # deal with Ubuntu 14.04 ffmpeg issues
 if ! command -v ffmpeg > /dev/null && [[ "$OSTYPE" == "linux-gnu" ]]; then
