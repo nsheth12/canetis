@@ -46,6 +46,15 @@ Puts a JSONified dictionary into the output.txt file, containing the following k
 3. "word" - the word
 4. "success" - whether the word was successfully aligned or not
 
+## Results
+
+The table below compares the results of Canetis to the results of Gentle on a set of
+forensic interview transcripts collected by the USC Gould School of Law.
+
+Session # | Gentle Aligned | Canetis Aligned | Canetis % Improvement
+--------- | -------------- | --------------- | ---------------------
+1 | 902 | 1002 | 32
+
 ## Contributors
 
 This project was created by [Nihar Sheth](http://github.com/nsheth12) and [Kian Ghodoussi](http://github.com/ghodouss).
