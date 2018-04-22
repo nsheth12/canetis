@@ -1,21 +1,9 @@
 # Canetis
 
-Canetis is a recursive forced aligner built on Gentle. On particularly long and/or noisy audio files, 
-small errors have the potential to accumulate within forced aligners such as Gentle. In order to
+Canetis is a recursive forced aligner built on the Gentle forced aligner. On particularly long and/or noisy audio files, 
+small errors can accumulate within forced aligners such as Gentle, leading to lower alignment rates. In order to
 resolve this issue, our aligner implements the recursive algorithm described by Moreno et al. in the paper [“A Recursive Algorithm for the Forced Alignment of Very Long Audio Segments”](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.649.6346&rep=rep1&type=pdf).
-
-This paper proposes the creation of these so-called “anchor points” of consecutively aligned words. A stretch of audio is an anchor point if it contains N number of 
-consecutive correctly aligned words. The aligner then continues to run recursively in the space between these anchor points until no further improvements can be attained.
-
-<p align="center">
-  <img src="pictures/AnchorPoints.png" width="350"/>
-  <br>
-  The larger the N, the more accurate the model will be. The smaller the N, the faster the model will be.
-</p>
-
-With these anchor points having been located, our wrapper will then run Gentle recursively on each individual non-anchored 
-section of audio. This isolation of non-aligned clips should in general reduce the number of errors in alignment, as well as increase
-the total number of aligned words. 
+We have found Canetis's performance to be noticeably improved compared to standard aligners such as Gentle.
 
 ## Installation Process
 
