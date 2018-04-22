@@ -7,11 +7,6 @@ if ! command -v python > /dev/null; then
     exit 1
 fi
 
-if ! command -v pip > /dev/null; then
-    echo "Please install pip for Python 2 and then run this script... exiting"
-    exit 1
-fi
-
 if ! command -v git > /dev/null; then
     echo "Please install git and then run this script... exiting"
     exit 1
@@ -35,12 +30,12 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
 		libtool subversion libatlas3-base python-pip \
 		python-dev wget unzip
 	sudo apt-get install -y ffmpeg || echo -n  "\n\nYou have to install ffmpeg from a PPA or from https://ffmpeg.org before you can run gentle\n\n"
-	pip install .
+	(cd gentle && pip install .)
 elif [[ "$OSTYPE" == "darwin"* ]]; then
 	brew install ffmpeg libtool automake autoconf wget
 
 	sudo easy_install pip
-	sudo pip install .
+	(cd gentle && pip install .)
 fi
 ###################################
 
