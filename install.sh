@@ -32,7 +32,11 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
 	sudo apt-get install -y ffmpeg || echo -n  "\n\nYou have to install ffmpeg from a PPA or from https://ffmpeg.org before you can run gentle\n\n"
 	(cd gentle && pip install .)
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-	brew install ffmpeg libtool automake autoconf wget
+	brew list ffmpeg || brew install ffmpeg
+	brew list libtool || brew install libtool
+	brew list automake || brew install automake
+	brew list autoconf || brew install autoconf
+	brew list wget || brew install wget
 
 	sudo easy_install pip
 	(cd gentle && pip install .)
@@ -43,7 +47,7 @@ fi
 (cd gentle/ext && sudo ./install_kaldi.sh)
 
 # load models
-(cd gentle && sudo ./install_models.sh && cd ext && make depend && make)
+(cd gentle && sudo ./install_models.sh && cd ext && sudo make depend && sudo make)
 
 pip install pydub
 
