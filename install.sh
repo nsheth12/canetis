@@ -7,6 +7,11 @@ if ! command -v python > /dev/null; then
     exit 1
 fi
 
+if ! command -v pip > /dev/null && ! command -v pip2 > /dev/null; then
+    echo "Please install pip and then run this script... exiting"
+    exit 1
+fi
+
 if ! command -v git > /dev/null; then
     echo "Please install git and then run this script... exiting"
     exit 1
@@ -19,11 +24,11 @@ git submodule update
 # initialize Kaldi submodule inside of Gentle
 (cd gentle && git submodule init && git submodule update)
 
-# ripped from Gentle install script
+# modified from Gentle's install script
 ###################################
 echo "Installing dependencies..."
 
-# Install OS-specific dependencies
+# install OS-specific dependencies
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
 	sudo apt-get update -qq
 	sudo apt-get install -y zlib1g-dev automake autoconf git \
@@ -36,8 +41,6 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 	brew list automake || brew install automake
 	brew list autoconf || brew install autoconf
 	brew list wget || brew install wget
-
-	# sudo easy_install pip
 fi
 ###################################
 
@@ -45,7 +48,7 @@ fi
 (cd gentle/ext && sudo ./install_kaldi.sh)
 
 # load models
-(cd gentle && sudo ./install_models.sh && cd ext && sudo make depend && sudo make)
+(cd gentle && sudo ./install_models.sh && cd ext && make depend && make)
 
 # install Python requirements
 pip install pydub || pip2 install pydub
@@ -61,5 +64,5 @@ fi
 # taken from https://stackoverflow.com/a/246128
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# a hacky initial solution
+# add paths to profile
 echo "export PYTHONPATH=$CURRENT_DIR:$CURRENT_DIR/gentle:$CURRENT_DIR/gentle/gentle:${PYTHONPATH}" >> ~/.profile

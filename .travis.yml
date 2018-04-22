@@ -9,6 +9,6 @@ matrix:
 install:
   - ./install.sh
   - source ~/.profile
-  - pip install pydub # this installs inside virtualenv
+  - pip install pydub || pip2 install pydub # this installs inside virtualenv
 script:
   - python test/test.py
