@@ -1,6 +1,9 @@
 csvs/
 .idea/
 clean_transcript.py
+.dockerignore
+Dockerfile
+temp_test/
 
 # Created by https://www.gitignore.io/api/python
 
@@ -13,9 +16,9 @@ __pycache__/
 # C extensions
 *.so
 
-# Kian's stuff
-gentle/
+# Gentle
 gentle-venv/
+gentle_backup_install
 
 # Visual Studio
 .vscode/
