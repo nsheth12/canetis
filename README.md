@@ -19,7 +19,7 @@ and we hope you find it useful!
 Clone the source onto your machine. `cd` into the `canetis` directory and run the following:
 ```bash
 ./install.sh
-source ~/.profile
+source ~/.bashrc
 ```
 
 This will require sudo access. This will install all required dependencies, install Canetis, and perform required configuration.
