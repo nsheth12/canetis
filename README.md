@@ -3,7 +3,8 @@
 Canetis is a recursive forced aligner built on the Gentle forced aligner. On particularly long and/or noisy audio files, 
 small errors can accumulate within forced aligners such as Gentle, leading to lower alignment rates. In order to
 resolve this issue, our aligner implements the recursive algorithm described by Moreno et al. in the paper [“A Recursive Algorithm for the Forced Alignment of Very Long Audio Segments”](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.649.6346&rep=rep1&type=pdf).
-We have found Canetis's performance to be noticeably improved compared to standard aligners such as Gentle.
+We have found Canetis's performance to be noticeably improved compared to standard aligners such as Gentle,
+and we hope you find it useful!
 
 ## Installation Process
 
@@ -11,16 +12,17 @@ We have found Canetis's performance to be noticeably improved compared to standa
 
 1. Python 2
 2. Pip
+3. Git
 
 **Install**
 
 Clone the source onto your machine. `cd` into the `canetis` directory and run the following:
 ```bash
-sudo ./install.sh
+./install.sh
 source ~/.profile
 ```
 
-This will install all required dependencies, install Canetis, and perform required configuration.
+This will require sudo access. This will install all required dependencies, install Canetis, and perform required configuration.
 
 ## Usage
 
@@ -36,12 +38,9 @@ Puts a JSONified dictionary into the output.txt file, containing the following k
 
 ## Results
 
-The table below compares the results of Canetis to the results of Gentle on a set of
-forensic interview transcripts collected by the USC Gould School of Law.
-
-Session # | Gentle Aligned | Canetis Aligned | Canetis % Improvement
---------- | -------------- | --------------- | ---------------------
-1 | 902 | 1002 | 32
+We tested Canetis on a set of forensic interview audio/transcripts collected by the USC
+Gould School of Law. On average, Canetis aligned 11.7% more words than Gentle which we
+would consider to be a significant improvement.
 
 ## Contributors
 
