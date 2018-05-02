@@ -24,6 +24,17 @@ source ~/.bashrc
 
 This will require sudo access. This will install all required dependencies, install Canetis, and perform required configuration.
 
+**Verify Your Installation**
+
+Run the following commands: 
+
+```bash
+cd test
+python2 test.py
+```
+
+Within a few minutes, the test should output the alignment results for both gentle and canetis.
+
 ## Usage
 
 ```bash
