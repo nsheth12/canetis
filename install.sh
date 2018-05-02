@@ -2,12 +2,19 @@
 
 set -e
 
-if ! command -v python && ! command -v python2 > /dev/null; then
-    echo "Please install Python 2 and then run this script... exiting"
+# find Python 2.7 installation
+if python -V 2>&1 | grep 2.7; then
+    PYTHON="python"
+elif python2 -V 2>&1 | grep 2.7; then
+    PYTHON="python2"
+elif python2.7 -V 2>&1 | grep 2.7; then
+    PYTHON="python2.7"
+else
+    echo "Please install Python 2.7 and then run this script... exiting"
     exit 1
 fi
 
-if ! command -v pip > /dev/null && ! command -v pip2 > /dev/null; then
+if ! command -v $PYTHON -m pip > /dev/null; then
     echo "Please install pip and then run this script... exiting"
     exit 1
 fi
@@ -51,8 +58,8 @@ fi
 (cd gentle && sudo ./install_models.sh && cd ext && make depend && make)
 
 # install Python requirements
-pip install pydub || pip2 install pydub
-(cd gentle && pip install . || pip2 install .)
+$PYTHON -m pip install pydub
+(cd gentle && $PYTHON -m pip install .)
 
 # deal with Ubuntu 14.04 ffmpeg issues
 if ! command -v ffmpeg > /dev/null && [[ "$OSTYPE" == "linux-gnu" ]]; then
@@ -64,5 +71,6 @@ fi
 # taken from https://stackoverflow.com/a/246128
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# add paths to profile
-echo "export PYTHONPATH=$CURRENT_DIR:$CURRENT_DIR/gentle:$CURRENT_DIR/gentle/gentle:${PYTHONPATH}" >> ~/.profile
+# add paths to bashrc/zshrc
+echo "export PYTHONPATH=$CURRENT_DIR:$CURRENT_DIR/gentle:$CURRENT_DIR/gentle/gentle:${PYTHONPATH}" >> ~/.bashrc
+echo "export PYTHONPATH=$CURRENT_DIR:$CURRENT_DIR/gentle:$CURRENT_DIR/gentle/gentle:${PYTHONPATH}" >> ~/.zshrc
