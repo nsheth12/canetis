@@ -1,7 +1,10 @@
 # Canetis
 
-Canetis is a recursive forced aligner built on the Gentle forced aligner. On particularly long and/or noisy audio files, 
-small errors can accumulate within forced aligners such as Gentle, leading to lower alignment rates. In order to
+Canetis is a recursive forced aligner built on Gentle. It gives, for each word in the
+transcript of an audio file, the timestamp at which it was said in the audio.
+
+There are many other excellent forced aligners out there, including Gentle, which Canetis is built on. However, on particularly long and/or noisy audio files, 
+small errors can accumulate within standard forced aligners, leading to lower alignment rates. In order to
 resolve this issue, our aligner implements the recursive algorithm described by Moreno et al. in the paper [“A Recursive Algorithm for the Forced Alignment of Very Long Audio Segments”](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.649.6346&rep=rep1&type=pdf).
 We have found Canetis's performance to be noticeably improved compared to standard aligners such as Gentle,
 and we hope you find it useful!
@@ -10,7 +13,7 @@ and we hope you find it useful!
 
 **Dependencies**
 
-1. Python 2.7 (will not work with Python 3)
+1. Python 2.7 (Canetis will not work with Python 3)
 2. Pip (which is linked to the Python 2.7 installation)
 3. Git
 
@@ -51,6 +54,11 @@ Puts a JSONified dictionary into the output.txt file, containing the following k
 We tested Canetis on a set of forensic interview audio/transcripts collected by the USC
 Gould School of Law. On average, Canetis aligned 11.7% more words than Gentle which we
 would consider to be a significant improvement.
+
+## Questions?
+If you have questions or something doesn't work the way you expect, please let us know!
+We are always looking to make this better. The best way to reach out is by creating a GitHub issue --
+we'll be able to see it and respond promptly. Try to be as specific as you can when doing this.
 
 ## Contributors
 
