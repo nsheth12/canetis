@@ -3,14 +3,16 @@ matrix:
   include:
     - os: osx
       language: generic
-      # makes OSX python look at the pip2 install location, we have to do this since we can't easy_install pip
-      before_install: export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
+      before_install:
+        # upgrade pip to deal with python.org TLS issue
+        - curl https://bootstrap.pypa.io/get-pip.py | python
+        - pip install --upgrade setuptools
     - os: linux
       language: python
       python: 2.7
 install:
   - ./install.sh
   - source ~/.profile
-  - pip install pydub || pip2 install pydub # this installs inside virtualenv
+  - python -m pip install pydub
 script:
   - python test/test.py
