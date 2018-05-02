@@ -10,8 +10,8 @@ and we hope you find it useful!
 
 **Dependencies**
 
-1. Python 2
-2. Pip
+1. Python 2.7 (will not work with Python 3)
+2. Pip (which is linked to the Python 2.7 installation)
 3. Git
 
 **Install**
@@ -26,14 +26,13 @@ This will require sudo access. This will install all required dependencies, inst
 
 **Verify Your Installation**
 
-Run the following commands: 
+Run the following command: 
 
 ```bash
-cd test
-python2 test.py
+python2 test/test.py
 ```
 
-Within a few minutes, the test should output the alignment results for both gentle and canetis.
+Shortly, the test should output the alignment results for both Gentle and Canetis.
 
 ## Usage
 
