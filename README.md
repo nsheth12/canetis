@@ -35,7 +35,7 @@ Run the following command:
 python2 test/test.py
 ```
 
-Shortly, the test should output the alignment results for both Gentle and Canetis.
+Shortly, it should output test alignment results for both Gentle and Canetis.
 
 ## Usage
 
@@ -52,13 +52,13 @@ Puts a JSONified dictionary into the output.txt file, containing the following k
 ## Results
 
 We tested Canetis on a set of forensic interview audio/transcripts collected by the USC
-Gould School of Law. On average, Canetis aligned 11.7% more words than Gentle which we
+Gould School of Law. On average, Canetis aligned 11.7% more words than Gentle, which we
 would consider to be a significant improvement.
 
 ## Questions?
 If you have questions or something doesn't work the way you expect, please let us know!
 We are always looking to make this better. The best way to reach out is by creating a GitHub issue --
-we'll be able to see it and respond promptly. Try to be as specific as you can when doing this.
+we'll be able to see it and respond promptly.
 
 ## Contributors
 
