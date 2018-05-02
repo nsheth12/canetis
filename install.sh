@@ -55,7 +55,7 @@ fi
 (cd gentle/ext && sudo ./install_kaldi.sh)
 
 # load models
-(cd gentle && sudo ./install_models.sh && cd ext && make depend && make)
+(cd gentle && ./install_models.sh && cd ext && make depend && make)
 
 # install Python requirements
 $PYTHON -m pip install pydub
