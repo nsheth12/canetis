@@ -14,7 +14,8 @@ else
     exit 1
 fi
 
-if ! command -v $PYTHON -m pip > /dev/null; then
+# command builtin not able to handle args
+if ! $PYTHON -m pip > /dev/null; then
     echo "Please install pip and then run this script... exiting"
     exit 1
 fi
